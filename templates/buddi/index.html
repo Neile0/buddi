@@ -1,0 +1,34 @@
+{% extends 'buddi/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+    <h1> Welcome to Buddi! What are you looking for?</h1>
+	<div>
+	    <!-- This is where the search bar goes -->
+	</div>
+	<div>
+	    <a href="{% url 'buddi:search' %}">Looking for a pet to sit</a>
+	</div>
+	
+	<div>
+	    <!-- This is an attempt at having the blog part in somehow -->
+		<img src="{% static 'images/vet.jpg' %}"
+		    alt="Picture of a vet" />
+		<p>Looking for a vet?
+		<a href="{% url 'buddi:blog' %}">Here are our recommendations!</a></p>
+		
+		<img src="{% static 'images/pet_store.jpg' %}"
+		    alt="Picture of a pet store" />
+		<p>Looking for a pet sore?
+		<a href="{% url 'buddi:blog' %}">This is our favourite!</a></p>
+		
+		<img src="{% static 'images/pet_news.jpg' %}"
+		    alt="Generic picture of happy pet" />
+		<p>Want to read more pet news?
+		<a href="{% url 'buddi:blog' %}">Check out our blog!</a></p>
+	
+{% endblock %}

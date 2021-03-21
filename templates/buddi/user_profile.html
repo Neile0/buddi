@@ -1,0 +1,54 @@
+{% extends 'buddi/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+{% endblock %}
+
+{% block body_block %}
+    <div>
+        {% if user.is_authenticated %}
+	        <h2>My Profile</h2>
+	    {% else %}
+	        <h2>Owner Profile</h2> <!--Should these be replaced by their names/usernames? -->
+		{% endif %}
+	</div>
+	<div>
+	    <strong>Name: </strong>{{ user.name }}
+		<strong>Location: </strong>{{user.location }}
+		<strong>Rating: </strong>
+	</div>
+	<div>
+	    {% if user.is_authenticated %}
+		{% else %}
+		    <strong>Rate this owner: </strong>
+			<a href=""<!--This should be a link to the pet sitter profile of an owner-->>I am also a sitter. Click here to see my profile!</a>
+		{% endif %}
+	</div>
+	<div>
+        {% if user.is_authenticated %}
+	        <h2>My Posts</h2>
+	    {% else %}
+	        <h2>Owner's Listings</h2>
+		{% endif %}
+	</div>
+	<div>
+	{% if pets %}
+	    <ul>
+	    {% for pet in pets %}
+		    <li>
+			    <strong>Name: </strong>{{ pet.name }}
+				<strong>Type: </strong>{{ pet.type }}
+				<strong>Date: </strong>{{ pet.date }}
+				{% if additional %}
+				    <strong>Additional information: </strong>{{ pet.additional }}
+				{% endif %}
+			</li>
+		{% endfor %}
+	{% else %}
+	    No pets to display.
+	{% endif %}
+	</div>
+		
+	
+	
+{% endblock %}
