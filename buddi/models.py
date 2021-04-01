@@ -29,9 +29,9 @@ class UserProfile(models.Model):
     profile_image = models.ImageField(upload_to='profile_images', blank=True,
                                       default="profile_images/profile_image_placeholder.jpg")
     profile_url = models.URLField(blank=True, unique=True)
-    contact_no - models.CharField(max_length=PHONE_NUMBER_LENGTH)
-    region = modls.ForeignKey(Region, on_delete=models.CASCADE)
-    is_sitter = models.BooleanField(default=false)
+    contact_no = models.CharField(max_length=PHONE_NUMBER_LENGTH)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    is_sitter = models.BooleanField(default=False)
 
     def __str__(self):
         return "(" + self.forname + self.middle_names + self.surname + "," + self.profile_url + ")"
@@ -48,7 +48,7 @@ class Animal(models.Model):
     bio = models.CharField(max_length=BIO_MAX_LENGTH)
     age = models.IntegerField()
 
-    class SexChoicesEnum(mdoels.TextChoices):
+    class SexChoicesEnum(models.TextChoices):
         MALE = 'M', _('Male')
         FEMALE = 'F', _('FEMALE')
 
