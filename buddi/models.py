@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.template.defaultfilters import slugify
 
 
@@ -14,7 +14,13 @@ class IntegerRangeField(models.IntegerField):
         return super(IntegerRangeField, self).formfield(**defaults)
 
 
-# Create your models here.
+# Create your models here
+class Region(models.Model):
+    REGION_LENGTH = 120
+    name = models.CharField(max_length=REGION_LENGTH, unique=True)
+    is_subregion_of = models.ForeignKey('self', on_delete=models.CASCADE)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -37,8 +43,15 @@ class UserProfile(models.Model):
         return "(" + self.forname + self.middle_names + self.surname + "," + self.profile_url + ")"
 
 
+class AnimalType(models.Model):
+    type = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.type
+
+
 class Animal(models.Model):
-    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     NAME_MAX_LENGTH = 128
     BIO_MAX_LENGTH = 300
@@ -49,46 +62,59 @@ class Animal(models.Model):
     age = models.IntegerField()
 
     class SexChoicesEnum(models.TextChoices):
-        MALE = 'M', _('Male')
-        FEMALE = 'F', _('FEMALE')
+        MALE = ('M', 'Male')
+        FEMALE = ('F', 'Female')
 
     sex = models.CharField(max_length=1, choices=SexChoicesEnum.choices)
 
     class IsNeuteredEnum(models.TextChoices):
-        YES = 'Y', _('Yes')
-        NO = 'N', _('No')
-        PREFER_NOT_TO_SAY = 'N/A', _('Prefer not to say')
+        YES = ('Y', 'Yes')
+        NO = ('N', 'No')
+        PREFER_NOT_TO_SAY = ('N/A', 'Prefer not to say')
 
     is_neutered = models.CharField(max_length=3, choices=IsNeuteredEnum.choices)
     requires_exercise = models.BooleanField()
-    exercise_requirement = models.IntegerRangeField(min_value=1, max_value=10)
+    exercise_requirement = IntegerRangeField(min_value=1, max_value=10)
     is_displayed = models.BooleanField(default=True)
     image_dir = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
-        self.image_dir = slugify(user.profile_url + self.name)
+        self.image_dir = slugify(self.user.profile_url + self.name)
 
     def __str__(self):
         return "(" + self.name + "," + UserProfile.__str__(user) + ")"
 
 
-class AnimalType(models.Model):
-    type = models.CharField(max_length=128)
-
-    def __str__(self):
-        return self.type
-
-
 class AnimalImages(models.Model):
+    def image_directory_path(self, name):
+        # file will be uploaded to MEDIA_ROOT/<animal>/<image-name>
+        return '{0}/{1}'.format(self.user.animal.image_dir, name)
+
     DIR = "animal_images/"
-    animal = models.OneToOneField(Animal, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=DIR + animal.image_dir)
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=image_directory_path)
 
     def __str__(self):
-        return self.DIR + animal.image_dir + self.image
+        return self.DIR + self.animal.image_dir + self.image
 
 
 class Sitter(models.Model):
-    user = models.ForeignKey(UserProfile)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     hourly_rate = models.DecimalField()
+
+
+class SitterOperatesInRegion(models.Model):
+    sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+
+
+class Comments(models.Model):
+    sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+    rating = IntegerRangeField(min_value=0, max_value=10)
+
+
+class Ad(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
+    type = models.ForeignKey(AnimalType, on_delete=models.CASCADE)
