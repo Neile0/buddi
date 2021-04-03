@@ -1,5 +1,5 @@
 from django.urls import path
-from buddi import views
+from . import views
 
 app_name = 'buddi'
 
@@ -11,5 +11,4 @@ urlpatterns = [
     path('become-a-buddi/', views.register, name='register'),
     path('find-sitter/', views.find_sitter, name='find-sitter'),
     ]
-
 
