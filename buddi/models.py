@@ -102,7 +102,7 @@ class AnimalImages(models.Model):
 class Sitter(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
-    hourly_rate = models.DecimalField()
+    hourly_rate = models.DecimalField(max_digits=4, decimal_places=1 )
 
 
 class SitterOperatesInRegion(models.Model):
