@@ -3,17 +3,15 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from buddi.forms import UserForm, UserProfileForm
+#from buddi.forms import UserForm, UserProfileForm
 from datetime import datetime
 
 
 
 # Create your views here.
-
 def index(request):
-    context_dict = {}
-    
-    return render(request, 'buddi/index.html', context=context_dict)
+    #return HttpResponse("What are you looking for today?")
+    return render(request, 'buddi/index.html')
 
 
 def user_login(request):
@@ -33,7 +31,6 @@ def user_login(request):
             return HttpResponse("Invalid login.")
     else:
         return render(request, 'buddi/login.html')
-
 
 
 @login_required

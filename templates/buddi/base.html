@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% block description_block %}{% endblock %}">
     <meta name="keywords" content="{% block keyword_block %}{% endblock %}">
+	<link rel="icon" href="{% static 'images/favicon.ico' %}">
     <meta name="author" content="Aidan Neil, Ioana Roca, Li-Jen Chen">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}">
     <title>Buddi -
         {% block title_block %}
         {% endblock %}
@@ -22,8 +23,14 @@
 <div>
     {% include 'static/navbar.html' %}
     {% block body_block %}
-    {% end block %}
+    {% endblock %}
     {% include 'static/footer.html' %}
 </div>
+<div>
+    <!--This is just for testing, feel free to delete if not important -->
+	{% if user.is_authenticated %}
+	{% else %}
+	<a href="{% url 'buddi:login'%}">Login</a>
+	{% endif %}
 </body>
 </html>
