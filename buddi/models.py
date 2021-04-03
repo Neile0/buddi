@@ -83,7 +83,7 @@ class Animal(models.Model):
         self.image_dir = slugify(self.user.profile_url + self.name)
 
     def __str__(self):
-        return "(" + self.name + "," + UserProfile.__str__(user) + ")"
+        return "(" + self.name + "," + UserProfile.__str__(User) + ")"
 
 
 class AnimalImages(models.Model):

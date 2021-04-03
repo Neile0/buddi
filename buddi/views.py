@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from buddi.forms import UserForm, UserProfileForm
+from .forms import UserForm, UserProfileForm
 from datetime import datetime
+from .models import Sitter, SitterOperatesInRegion, Comments
 
 
 
@@ -72,3 +73,14 @@ def register(request):
                   context = {'user_form': user_form,
                              'profile_form': profile_form,
                              'registered': registered})
+
+
+def find_sitter(request):
+    contextBox = {'sitterM' : Sitter,
+                  'sitterR' : SitterOperatesInRegion,
+                  'comment' : Comments,
+
+                  }
+
+    return render(request, 'buddi/sitter_profile.html', contextBox)
+
