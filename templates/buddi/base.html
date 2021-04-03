@@ -28,9 +28,10 @@
 </div>
 <div>
     <!--This is just for testing, feel free to delete if not important -->
-	{% if user.is_authenticated %}
-	{% else %}
-	<a href="{% url 'buddi:login'%}">Login</a>
-	{% endif %}
+	<ul>
+	<li><a href="{% url 'buddi:login' %}">Login</a></li>
+	<li><a href="{% url 'buddi:logout' %}">Logout</a></li>
+	</ul>
+</div>
 </body>
 </html>
