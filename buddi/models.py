@@ -22,9 +22,10 @@ class UserProfile(models.Model):
     BIO_MAX_LENGTH = 300
     PHONE_NUMBER_LENGTH = 11
 
-    forename = models.CharField(max_length=NAME_MAX_LENGTH)
-    middle_names = models.CharField(max_length=NAME_MAX_LENGTH, default="")
-    surname = models.CharField(max_length=NAME_MAX_LENGTH)
+    #Li delete the following datafield as I think some of them already in the default user setting.
+    #forename = models.CharField(max_length=NAME_MAX_LENGTH)
+    #middle_names = models.CharField(max_length=NAME_MAX_LENGTH, default="")
+    #surname = models.CharField(max_length=NAME_MAX_LENGTH)
     bio = models.CharField(max_length=BIO_MAX_LENGTH)
     profile_image = models.ImageField(upload_to='profile_images', blank=True,
                                       default="profile_images/profile_image_placeholder.jpg")
