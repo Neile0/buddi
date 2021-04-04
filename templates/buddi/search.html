@@ -1,2 +1,16 @@
 {% extends 'buddi/base.html' %}
 {% load static %}
+
+{% block title_block %}
+    Search page
+{% endblock %}
+
+{% block body_block %}
+    <form method="get">
+	    {{ filter.form.as_p }}
+		<input type="submit" />
+	</form>
+	{% for ob in filter.qs %}
+	    {{ ob.animal }} - ${{ ob.type }} </br>
+	{% endfor %}
+{% endblock %}

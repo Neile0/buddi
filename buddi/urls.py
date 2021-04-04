@@ -5,6 +5,7 @@ app_name = 'buddi'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('search/', views.search, name='search'),
     path('login/', views.user_login, name='login'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),

@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, UserProfileForm
 from datetime import datetime
-from .models import Sitter, SitterOperatesInRegion, Comments
+from .models import Sitter, SitterOperatesInRegion, Comments, Ad
+from .filters import AdFilter
 
 
 
@@ -13,6 +14,10 @@ from .models import Sitter, SitterOperatesInRegion, Comments
 def index(request):
     #return HttpResponse("What are you looking for today?")
     return render(request, 'buddi/index.html')
+
+def search(request):
+    ads = AdFilter(request.GET, queryset = Ad.objects.all())
+    return render(request, 'buddi/search.html', {'filter':ads})
 
 
 def user_login(request):
