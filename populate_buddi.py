@@ -97,7 +97,9 @@ def populate():
          'password': 'newpass890',
          'profile': user_profiles[1],},
         ]
-    
+
+
+    rates = {'tomhenry' : 34.5,}    
     
     #for rg in regions:
      #   r = add_region(rg['name'])
@@ -111,10 +113,18 @@ def populate():
                      usr['email'], usr['password'])
         pr = usr['profile']
         ur = add_userProfile(u, pr['bio'], pr['contact_no'], add_region(pr['region']), pr['sitter'])
+        if(pr['sitter']):
+            st = add_sitter(ur, rates[ur.user.username])
+            add_sitteropreg(st, ur.region)
         ans = pr['pets']
         for p in ans:
             add_animal(ur, p['name'], add_type(p['type']), p['bio'], p['age'],
                        p['sex'], p['neutered'], p['exercise'], p['display'], p['exreq'])
+            
+    for pet in Animal.objects.all():
+        add_ad(pet.user, pet, pet.type)
+        
+        
     
 def add_region(name):
     r = Region.objects.get_or_create(name=name)[0]
@@ -125,9 +135,7 @@ def add_type(name):
     t = AnimalType.objects.get_or_create(type=name)[0]
     t.save()
     return t
-    
-    
-    
+      
 def add_user(username, first_name, last_name, email, password):
     u=User.objects.get_or_create(username=username, first_name=first_name, 
                                  last_name=last_name, email=email)[0]
@@ -155,6 +163,22 @@ def add_animal(user, name, type, bio, age, sex, neutered, exercise, display,
     a.display = display
     a.save()
     return a
+
+def add_sitter(userprofile, rate):
+    s = Sitter.objects.get_or_create(user=userprofile)[0]
+    s.hourly_rate = rate
+    s.save()
+    return s
+
+def add_sitteropreg(sitter, region):
+    opreg = SitterOperatesInRegion.objects.get_or_create(sitter=sitter, region=region)[0]
+    opreg.save()
+    return opreg
+
+def add_ad(userprofile, animal, type):
+    ad = Ad.objects.get_or_create(user=userprofile, animal=animal, type=type)[0]
+    ad.save()
+    return ad
     
 
 # Start execution here!

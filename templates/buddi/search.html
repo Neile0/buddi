@@ -11,6 +11,6 @@
 		<input type="submit" />
 	</form>
 	{% for ob in filter.qs %}
-	    {{ ob.animal }} - ${{ ob.type }} </br>
+	    {{ ob.animal.name }} - {{ ob.type }} </br>
 	{% endfor %}
 {% endblock %}
