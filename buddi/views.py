@@ -78,9 +78,9 @@ def register(request):
 
 
 def find_sitter(request):
-    contextBox = {'sitterM' : Sitter,
-                  'sitterR' : SitterOperatesInRegion,
-                  'comment' : Comments,
+    contextBox = {'sitterM' : Sitter.objects.all(),
+                  'sitterR' : SitterOperatesInRegion.objects.all(),
+                  'comment' : Comments.objects.all(),
 
                   }
 
