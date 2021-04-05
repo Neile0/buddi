@@ -36,6 +36,7 @@
 		<img src="{% static 'images/pet_news.jpg' %}"
 		    alt="Generic picture of happy pet" />
 		<p>Want to read more pet news?
-		<!--Link to blog-->Check out our blog!</a></p>
+		<a href="{% url 'blog:index' %}">Check out our blog!</a></p>
+    </div>
 	
 {% endblock %}
