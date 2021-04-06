@@ -1,0 +1,45 @@
+{# Written by Aidan #}
+{% load static %}
+<nav class="navbar navbar-default bg-primary-lighter">
+    <div class="container-fluid p-2">
+        <div class="navbar-header">
+            <a class="fw-bold navbar-brand" href="{% url 'buddi:index' %}">Buddi.</a>
+        </div>
+        <div class="nav navbar-right">
+            <ul class="nav navbar-nav nav-ul">
+                <li><a class="p-3" href="{% url 'blog:index'">Blog</a></li>
+                {% if user.is_authenticated %}
+                <li><a class="p-3" href="{% url 'buddi:login' %}">My Profile</a></li>
+                {% else %}
+                <li><a class="p-3" href="{% url 'buddi:login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+            <form class="navbar-form navbar-search" method="post" action="/search/">
+                {% csrf_token %}
+                <div class="input-group input-group-s">
+                    <div class="input-group-s">
+                        <span class="input-group-text no-border-radius">Looking</span>
+                    </div>
+                    <select class="form-control custom-select no-border-radius">
+                        <option selected value="sitter">For A Sitter</option>
+                        <option value="sit">To Sit</option>
+                    </select>
+
+                    <div class="input-group-s">
+                        <span class="input-group-text no-border-radius">In</span>
+                    </div>
+                    <select class="form-control custom-select no-border-radius">
+                        <option selected>Glasgow</option>
+                        <option value="1">Edinbrugh</option>
+                    </select>
+                    <div class="input-group-btn input-group-s">
+                        <button id="btn-search" type="submit" name="submit" class="btn btn-primary no-border-radius">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</nav>

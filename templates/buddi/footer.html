@@ -1,0 +1,40 @@
+{# Written by Aidan #}
+{% load static %}
+<div class="container-fluid bg-dark">
+    <div class="row row-cols-2 p-2 justify-content-around">
+        <div class="col">
+            <a class="fw-bold navbar-brand" href="{% url 'buddi:index' %}">Buddi.</a>
+            <div>
+                <ul>
+                    <li>facebook</li>
+                    <li>insta</li>
+                    <li>twitter</li>
+                    <li>email</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+
+            <h5>Quick Links</h5>
+
+            <div class="row row-cols-3 justify-content-around">
+                <a href="{% url 'buddi:login' %}">Login</a>
+                <a>Blog</a>
+                <a>Create an account</a>
+                <a>Privacy</a>
+                <a>Sitemap</a>
+                <a>Search</a>
+
+
+            </div>
+        </div>
+
+
+        <div class="row w-100">
+            <hr>
+
+                <h6>&copy;{% now "Y" %} Buddi. All Rights Reserved.</h6>
+        </div>
+
+    </div>
+</div>

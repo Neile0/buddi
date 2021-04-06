@@ -1,21 +1,59 @@
-{% extends 'buddi/base.html' %}
+{% extends 'buddi/base_without_nav_footer.html' %}
 {% load static %}
 
 <!--This is the same as the one for Rango was -->
 
 {% block title_block %}
-    Login
+Login
 {% endblock %}
 
 {% block body_block %}
-    <h1>Login to Buddi</h1>
-	<form id="login_form" method="post" action="{% url 'buddi:login' %}">
-	    {% csrf_token %}
-		Username: <input type="text" name="username" value="" size="50" />
-		<br />
-		Password: <input type="password" name="password" value="" size="50" />
-		<br />
-		<input type="submit" value="submit" />
-	</form>
+
+
+<div class="container d-flex align-items-center min-vh-100 py-3 py-md-0">
+    <div class="container"></div>
+    <div class="card login-card">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="" alt="..." class="login-card-image"/>
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                    <div class="brand-wrapper">
+                        <a class="fw-bold navbar-brand" href="{% url 'buddi:index' %}">Buddi.</a>
+
+                    </div>
+                    <div class="card-subtitle">
+                        <p>Sign into your account</p>
+                    </div>
+                    <form id="login-form" method="post" action="{% url 'buddi:login' %}">
+                        {% csrf_token %}
+                        <input class="form-control" type="text" name="username" placeholder="Username"/>
+                        <input class="form-control" type="password" name="password" placeholder="*******"/>
+                        <input class="btn mb-4" type="submit" value="Login"/>
+                    </form>
+                    <a>Forgotten password?</a>
+                    <hr>
+                    <p>Dont have an account</p>
+                    <a>Register here</a>
+                </div>
+            </div>
+        
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<h1>Login to Buddi</h1>
+<form id="login_form" method="post" action="{% url 'buddi:login' %}">
+    {% csrf_token %}
+    Username: <input type="text" name="username" value="" size="50"/>
+    <br/>
+    Password: <input type="password" name="password" value="" size="50"/>
+    <br/>
+    <input type="submit" value="submit"/>
+</form>
 {% endblock %}
 	

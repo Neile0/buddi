@@ -1,0 +1,90 @@
+/* Written by Aidan */
+body{
+    font-family: 'Montserrat' ;
+}
+a {
+ color: rgb(30,30,30) !important;
+ text-decoration: none !important;
+}
+
+a:hover {
+    color: black !important;
+}
+
+.bg-custom-grey{
+    background-color: rgb(220, 220, 220);
+}
+
+.bg-primary{
+    background-color: rgb(252,209,42) !important;
+}
+
+.bg-primary-lighter{
+    background-color: #8abaae;
+}
+
+.bg-primary-darker{
+    background-color: rgb(254,251,215);
+    color: black;
+}
+
+.bg-dark{
+    background-color: #2B4942;
+    color: #365C53;
+}
+.bg-dark a{
+    color: #365C53 !important;
+}
+
+.btn-primary{
+    color: black !important;
+    background-color: rgb(252,209,42) !important;
+    border-color: rgb(254,251,215) !important;
+}
+
+#index-hero{
+    min-height: 80vh;
+    background-image: url('images/buddi_hero.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+}
+
+#index-hero-input{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.vertical-center{
+    display:flex;
+    align-items: center;
+}
+
+.nav-ul{
+    flex-direction: row !important;
+    align-items: center
+}
+.nav-ul a{
+
+ color: rgb(30,30,30);
+ text-decoration: none;
+}
+
+.nav-ul a:hover{
+    color: black;
+}
+
+.navbar-brand{
+color: black;}
+
+.navbar-brand:hover{
+color:black;
+}
+
+.navbar-search{
+min-width: 500px ;}
+
+.no-border-radius{
+    border-radius: 0 !important;
+}
