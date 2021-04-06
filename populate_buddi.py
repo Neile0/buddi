@@ -4,8 +4,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','buddi_project.settings')
 
 import django
 django.setup()
-from django.template.defaultfilters import slugify
-from django.contrib.auth.models import User
 from buddi.models import *
 
 def populate():

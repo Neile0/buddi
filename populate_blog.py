@@ -51,11 +51,17 @@ def populate():
 
     for x in range(0,5):
         add_news(News_topic_list[x], File(open(News_contend_list[x], encoding="utf-8")),
-                 ImageFile(Image.open(News_Pic_list[x])))
+                 ImageFile(
+                     Image.open(News_Pic_list[x]).load()
+                 ))
         add_vets(Vets_topic_list[x], File(open(Vet_contend_list[x], encoding="utf-8")),
-                 ImageFile(Image.open(Vet_Pic_list[x])))
+                 ImageFile(
+                     Image.open(Vet_Pic_list[x]).load()
+                 ))
         add_shop(Shops_topic_list[x], File(open(Shop_contend_list[x], encoding="utf-8")),
-                 ImageFile(Image.open(Shop_Pic_list[x])))
+                 ImageFile(
+                     Image.open(Shop_Pic_list[x]).load()
+                 ))
 
 
 
