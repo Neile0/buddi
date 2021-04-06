@@ -7,6 +7,7 @@ Home
 {% endblock %}
 
 {% block body_block %}
+<<<<<<< HEAD
 <div class="jumbotron text-center vertical-center" id="index-hero">
     <div class="container">
         <h1 class="display-1 fw-bold">Buddi.</h1>
@@ -133,3 +134,39 @@ Home
 <!--        &lt;!&ndash;Link to blog&ndash;&gt;Check out our blog!</a></p>-->
 
     {% endblock %}
+=======
+    <h1> Welcome to Buddi! What are you looking for?</h1>
+	<div>
+	    <!-- This is where the search bar goes -->
+	</div>
+	<div>
+	    <a href="{% url 'buddi:search' %}">Looking for a pet to sit</a>
+	</div>
+    <div>
+	    <a href="{% url 'buddi:find-sitter' %}">Find fit sitter to take care your buddi here</a>
+	</div>
+    <div>
+	    <a href="{% url 'buddi:register' %}">Sign up here</a>
+	</div>
+
+	
+	<div>
+	    <!-- This is an attempt at having the blog part in somehow -->
+		<img src="{% static 'images/vet.jpg' %}"
+		    alt="Picture of a vet" />
+		<p>Looking for a vet?
+		<!--Link to blog-->Here are our recommendations!</p>
+		
+		<img src="{% static 'images/pet_store.jpg' %}"
+		    alt="Picture of a pet store" />
+		<p>Looking for a pet sore?
+		<!--Link to blog-->This is our favourite!</p>
+		
+		<img src="{% static 'images/pet_news.jpg' %}"
+		    alt="Generic picture of happy pet" />
+		<p>Want to read more pet news?
+		<a href="{% url 'blog:index' %}">Check out our blog!</a></p>
+    </div>
+	
+{% endblock %}
+>>>>>>> 70d11fb6e54cb35bc10f964794a24e2150ed3600

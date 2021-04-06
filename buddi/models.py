@@ -17,8 +17,10 @@ class IntegerRangeField(models.IntegerField):
 
 class Region(models.Model):
     REGION_LENGTH = 120
-    name = models.CharField(max_length=REGION_LENGTH, unique=True)
-    is_subregion_of = models.ForeignKey('self', on_delete=models.CASCADE)
+    name = models.CharField(max_length=REGION_LENGTH, unique=True, primary_key=True)
+    #is_subregion_of = models.ForeignKey('self', on_delete=models.CASCADE, default='UK')
+    def __str__(self):
+        return self.name
 
 
 class UserProfile(models.Model):
@@ -41,11 +43,11 @@ class UserProfile(models.Model):
     is_sitter = models.BooleanField(default=False)
 
     def __str__(self):
-        return "(" + self.forname + self.middle_names + self.surname + "," + self.profile_url + ")"
+        return "(" + self.user.first_name + self.user.last_name + ", " + self.profile_url + ")"
 
 
 class AnimalType(models.Model):
-    type = models.CharField(max_length=128)
+    type = models.CharField(max_length=128, primary_key=True)
 
     def __str__(self):
         return self.type
@@ -75,15 +77,15 @@ class Animal(models.Model):
 
     is_neutered = models.CharField(max_length=3, choices=IsNeuteredEnum.choices)
     requires_exercise = models.BooleanField()
-    exercise_requirement = IntegerRangeField(min_value=1, max_value=10)
+    exercise_requirement = IntegerRangeField(min_value=0, max_value=10)
     is_displayed = models.BooleanField(default=True)
     image_dir = models.SlugField(unique=True)
 
-    def save(self, *args, **kwargs):
+    def save_image(self, *args, **kwargs):
         self.image_dir = slugify(self.user.profile_url + self.name)
 
     def __str__(self):
-        return "(" + self.name + "," + UserProfile.__str__(User) + ")"
+        return "(" + self.name + "," +self.user.user.username + ")"
 
 
 class AnimalImages(models.Model):
@@ -101,13 +103,18 @@ class AnimalImages(models.Model):
 
 class Sitter(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-
     hourly_rate = models.DecimalField(max_digits=4, decimal_places=1)
+    
+    def __str__(self):
+        return self.user.user.username
 
 
 class SitterOperatesInRegion(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return (self.sitter.user.user.username + " in " + self.region.name)
 
 
 class Comments(models.Model):
@@ -119,3 +126,7 @@ class Ad(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     type = models.ForeignKey(AnimalType, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        show = self.animal.name + ", " + self.type.__str__()
+        return show

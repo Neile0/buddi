@@ -4,6 +4,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','buddi_project.settings')
 
 import django
 django.setup()
+from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 from buddi.models import *
 
 def populate():
@@ -13,25 +15,28 @@ def populate():
         {'name': 'Edinburgh'},
         {'name': 'London'},
         ]
+    
+    types = ['cat', 'dog', 'bunny', 'parrot']
+    
     animals_1= [
         {'name': 'Mindy',
          'type': 'cat',
          'bio': 'Very smart but shy at first.',
          'age': 2,
          'sex': 'F',
-         'neuterd': 'Y',
+         'neutered': 'Y',
          'exercise': False,
+         'exreq':0,
          'display': True,},
         {'name': 'Bob',
          'type': 'dog',
          'bio': 'Friendly',
          'age': 5,
          'sex': 'M',
-         'neuterd': 'N',
+         'neutered': 'N',
          'exercise': True,
-         'exreqmin':2,
-         'exreqmax':4,
-         'display': True,},
+         'exreq':2,
+         'display': True,}
         ]
     
     animals_2 = [
@@ -40,24 +45,27 @@ def populate():
          'bio': 'Does not do much, easy to care for.',
          'age': 1,
          'sex': 'F',
-         'neuterd': 'N',
+         'neutered': 'N',
          'exercise': False,
+         'exreq':0,
          'display': False,},
         {'name': 'Fred',
          'type': 'cat',
          'bio': 'Needs to be fed often or will scream',
          'age': 7,
          'sex': 'M',
-         'neuterd': 'Y',
+         'neutered': 'Y',
          'exercise': False,
+         'exreq':0,
          'display': True,},
         {'name': 'Dog',
          'type': 'cat',
          'bio' : "Thinks he can bark. He can't.",
          'age': 4,
          'sex': 'M',
-         'nuetered': 'Y',
+         'neutered': 'Y',
          'exercise': False,
+         'exreq':0,
          'display': True},
         ]
     
@@ -65,11 +73,13 @@ def populate():
         {'bio' : 'Owner of two nice pets.',
         'contact_no': '072347',
         'region':'Glasgow',
-        'sitter': False,},
+        'sitter': False,
+        'pets': animals_1},
         {'bio' : 'Owner and sitter',
         'contact_no': '07483849',
         'region':'Edinburgh',
-        'sitter': True,},
+        'sitter': True,
+        'pets': animals_2,},
         ]
     
     users = [
@@ -79,30 +89,53 @@ def populate():
          'email': 'jane@jones.com',
          'password':'thisisapassword5',
          'profile': user_profiles[0],
-         'pets': animals_1,
          },
         {'username': 'tomhenry',
          'first_name': 'Tom',
          'last_name': 'Henry',
          'email': 'tom@henry.com',
          'password': 'newpass890',
-         'profile': user_profiles[1],
-         'pets': animals_2,},
+         'profile': user_profiles[1],},
         ]
+
+
+    rates = {'tomhenry' : 34.5,}    
     
+    #for rg in regions:
+     #   r = add_region(rg['name'])
+        
+    #for ty in types:
+     #   t = add_type(ty)
     
 
     for usr in users:
         u = add_user(usr['username'], usr['first_name'], usr['last_name'], 
                      usr['email'], usr['password'])
         pr = usr['profile']
-        add_userProfile(u, pr['bio'], pr['contact_no'], pr['region'], pr['sitter'])
-        ans = usr['pets']
+        ur = add_userProfile(u, pr['bio'], pr['contact_no'], add_region(pr['region']), pr['sitter'])
+        if(pr['sitter']):
+            st = add_sitter(ur, rates[ur.user.username])
+            add_sitteropreg(st, ur.region)
+        ans = pr['pets']
         for p in ans:
-            add_animal(u, p['name'], p['type'], p['bio'], p['age'],
-                       p['sex'], p['neutered'], p['exercise'], p['display'])
+            add_animal(ur, p['name'], add_type(p['type']), p['bio'], p['age'],
+                       p['sex'], p['neutered'], p['exercise'], p['display'], p['exreq'])
+            
+    for pet in Animal.objects.all():
+        add_ad(pet.user, pet, pet.type)
+        
+        
     
+def add_region(name):
+    r = Region.objects.get_or_create(name=name)[0]
+    r.save()
+    return r
 
+def add_type(name):
+    t = AnimalType.objects.get_or_create(type=name)[0]
+    t.save()
+    return t
+      
 def add_user(username, first_name, last_name, email, password):
     u=User.objects.get_or_create(username=username, first_name=first_name, 
                                  last_name=last_name, email=email)[0]
@@ -111,28 +144,41 @@ def add_user(username, first_name, last_name, email, password):
     return u
 
 def add_userProfile(user, bio, contact, region, sitter):
-    up = UserProfile.objects.get_or_create(user=user)[0]
+    up = UserProfile.objects.get_or_create(user=user, region = region)[0]
     up.bio = bio
+    up.profile_url = slugify('buddi' + user.username)
     up.contact_no = contact
-    up.region = region
     up.is_sitter = sitter
     up.save()
     return up
 
 def add_animal(user, name, type, bio, age, sex, neutered, exercise, display,
-               exmin=0, exmax=0):
-    a = Animal.objects.get_or_create(user=user, name=name)[0]
-    a.type = type
+               ex):
+    a = Animal.objects.get_or_create(user=user, name=name, type=type, age=age,
+                                     requires_exercise=exercise,
+                                     exercise_requirement = ex, image_dir = slugify(user.profile_url+name))[0]
     a.bio = bio
-    a.age = age
     a.sex = sex
     a.is_neutered = neutered
-    a.requires_exercise = exercise
-    if(exercise):
-        a.exercise_requirement = IntegerRangeField(exmin, exmax)
     a.display = display
     a.save()
     return a
+
+def add_sitter(userprofile, rate):
+    s = Sitter.objects.get_or_create(user=userprofile)[0]
+    s.hourly_rate = rate
+    s.save()
+    return s
+
+def add_sitteropreg(sitter, region):
+    opreg = SitterOperatesInRegion.objects.get_or_create(sitter=sitter, region=region)[0]
+    opreg.save()
+    return opreg
+
+def add_ad(userprofile, animal, type):
+    ad = Ad.objects.get_or_create(user=userprofile, animal=animal, type=type)[0]
+    ad.save()
+    return ad
     
 
 # Start execution here!
