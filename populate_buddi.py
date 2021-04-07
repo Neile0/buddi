@@ -169,7 +169,7 @@ def add_animal(user, name, type, bio, age, sex, neutered, exercise, display,
     a.bio = bio
     a.sex = sex
     a.is_neutered = neutered
-    a.display = display
+    a.is_displayed = display
     a.save()
     return a
 

@@ -27,7 +27,12 @@ def search(request, case, place):
     sitter_list = []
     context_dict = {}
     if request.method == 'POST':
+<<<<<<< HEAD
 
+=======
+    
+       
+>>>>>>> e6ee5f983d53b9daf64d8155c715493a59891947
         context_dict['cases'] = case
 
         if case == 'sitter':
@@ -64,6 +69,17 @@ def user_login(request):
             return HttpResponse("Invalid login.")
     else:
         return render(request, 'buddi/login.html')
+    
+def user_profile(request, username):
+    context_dict={}
+    user = User.objects.all().get(username=username)
+    userprofile = UserProfile.objects.all().get(user=user)
+    animals = Animal.objects.all().filter(user=userprofile)
+    
+    context_dict['current_user'] = user
+    context_dict['userprofile'] = userprofile
+    context_dict['pets'] = animals
+    return render(request, 'buddi/user_profile.html', context_dict)
 
 
 @login_required
