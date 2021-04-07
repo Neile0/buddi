@@ -6,26 +6,31 @@
 
 {% block body_block %}
     <div>
-        {% if user.is_authenticated %}
-	        <h2>My Profile</h2>
+	    {% if user == current_user and user.is_authenticated %}
+	         <h2>My Profile</h2>
+			 <a href="{% url 'buddi:logout' %}">Logout</a>
 	    {% else %}
-	        <h2>Owner Profile</h2> <!--Should these be replaced by their names/usernames? -->
+	        <h2>Owner Profile - {{current_user.username }}</h2> <!--Should these be replaced by their names/usernames? -->
 		{% endif %}
+		
 	</div>
 	<div>
-	    <strong>Name: </strong>{{ user.name }}
-		<strong>Location: </strong>{{user.location }}
-		<strong>Rating: </strong>
+	    <strong>Name: </strong>{{ current_user.first_name }} {{ current_user.last_name}} </br>
+		<strong>Location: </strong>{{ userprofile.region }} </br>
+		<strong>Rating: </strong> </br>
 	</div>
 	<div>
 	    {% if user.is_authenticated %}
-		{% else %}
-		    <strong>Rate this owner: </strong>
-			<a href=""<!--This should be a link to the pet sitter profile of an owner-->>I am also a sitter. Click here to see my profile!</a>
+		    {% if user != current_user %}
+			    <strong>Rate this owner: </strong> </br>
+			{% endif %}
+			{% if userprofile.is_sitter %}
+			<a href=""<!--This should be a link to the pet sitter profile of an owner-->I am also a sitter. Click here to see my profile!</a>
+			{% endif %}
 		{% endif %}
 	</div>
 	<div>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user == current_user %}
 	        <h2>My Posts</h2>
 	    {% else %}
 	        <h2>Owner's Listings</h2>
@@ -33,17 +38,20 @@
 	</div>
 	<div>
 	{% if pets %}
-	    <ul>
+        <ul>
 	    {% for pet in pets %}
+		    {% if pet.is_displayed == True or user == current_user %}
 		    <li>
-			    <strong>Name: </strong>{{ pet.name }}
-				<strong>Type: </strong>{{ pet.type }}
-				<strong>Date: </strong>{{ pet.date }}
-				{% if additional %}
-				    <strong>Additional information: </strong>{{ pet.additional }}
+			    <strong>Name: </strong>{{ pet.name }} </br>
+				<strong>Type: </strong>{{ pet.type }} </br>
+				<!--strong>Date: </strong>{{ pet.date }}-->
+				{% if pet.bio != '' %}
+				    <strong>Additional information: </strong>{{ pet.bio }} </br>
 				{% endif %}
 			</li>
+			{% endif %}
 		{% endfor %}
+		</ul>
 	{% else %}
 	    No pets to display.
 	{% endif %}
