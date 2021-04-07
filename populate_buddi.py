@@ -16,7 +16,7 @@ def populate():
         {'name': 'West End', 'sub': 'Glasgow'}
     ]
 
-    types = ['cat', 'dog', 'bunny', 'parrot']
+    types = ['Cat', 'Dog', 'Bunny', 'Parrot']
 
     animals_1 = [
         {'name': 'Mindy',

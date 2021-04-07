@@ -16,6 +16,7 @@ def get_parent_regions():
 # Create your views here.
 def index(request):
     context_dict = {'regions': get_parent_regions()}
+    print(context_dict)
     return render(request, 'buddi/index.html', context=context_dict)
 
 
@@ -25,7 +26,7 @@ def search(request, case, place):
     # place should be a region/region name, the differences can be easily fixed
     ad_list = []
     sitter_list = []
-    context_dict = {}
+    context_dict = {'regions': get_parent_regions()}
     if request.method == 'POST':
 
         context_dict['cases'] = case
@@ -67,7 +68,7 @@ def user_login(request):
 
 
 def user_profile(request, username):
-    context_dict = {}
+    context_dict = {'regions': get_parent_regions()}
     user = User.objects.all().get(username=username)
     userprofile = UserProfile.objects.all().get(user=user)
     animals = Animal.objects.all().filter(user=userprofile)
@@ -75,6 +76,7 @@ def user_profile(request, username):
     context_dict['current_user'] = user
     context_dict['userprofile'] = userprofile
     context_dict['pets'] = animals
+    print(context_dict)
     return render(request, 'buddi/user_profile.html', context_dict)
 
 
@@ -117,10 +119,11 @@ def register(request):
 
 
 def find_sitter(request):
-    contextBox = {'sitterM': Sitter.objects.all(),
-                  'sitterR': SitterOperatesInRegion.objects.all(),
-                  'comment': Comments.objects.all(),
+    context_dict = {'regions': get_parent_regions(),
+                    'sitterM': Sitter.objects.all(),
+                    'sitterR': SitterOperatesInRegion.objects.all(),
+                    'comment': Comments.objects.all(),
 
-                  }
+                    }
 
-    return render(request, 'buddi/sitter_profile.html', contextBox)
+    return render(request, 'buddi/sitter_profile.html', context=context_dict)
