@@ -10,7 +10,7 @@ Home
 <div class="jumbotron text-center vertical-center" id="index-hero">
     <div class="container">
         <h1 class="display-1 fw-bold">Buddi.</h1>
-        <h2 class="display-6">Helping you find a <b>Buddi</b> to look after your <b>Buddi</b></h2>
+        <h2 class="display-12">Helping you find a <b>Buddi</b> to look after your <b>Buddi</b></h2>
         <div class="row" id="index-hero-input">
             <form class="form-inline" method="post" action="/search/">
                 {% csrf_token %}
@@ -40,65 +40,65 @@ Home
 </div>
 
 <div class="container-fluid bg-primary-darker">
-        <div class="container col-6 p-5">
-            <div class="row gy-5 cols-1 text-center">
-                <h2>How it works</h2>
-                <hr>
+    <div class="container col-6 p-5">
+        <div class="row gy-5 cols-1 text-center">
+            <h2>How it works</h2>
+            <hr>
+        </div>
+        <div class="row row-cols-2 p-3">
+            <div class="col">
+                <p class="text-center">Finding A Sitter</p>
+                <ol>
+                    <li>Search all of our great pet sitters and filter by your needs</li>
+                    <li>Find your chosen <b>Buddi</b>. or make a listing for a <b>Buddi</b>. to get in contact with
+                        you
+                    </li>
+                    <li>Create an account and get in touch</li>
+                </ol>
             </div>
-            <div class="row row-cols-2 p-3">
-                <div class="col">
-                    <p class="text-center">Finding A Sitter</p>
-                    <ol>
-                        <li>Search all of our great pet sitters and filter by your needs</li>
-                        <li>Find your chosen <b>Buddi</b>. or make a listing for a <b>Buddi</b>. to get in contact with
-                            you
-                        </li>
-                        <li>Create an account and get in touch</li>
-                    </ol>
-                </div>
-                <div class="col">
-                    <p class="text-center">Becoming A Sitter</p>
-                    <ol>
-                        <li>Create a <b>Buddi</b>. account</li>
-                        <li>Make an amazing profile to get hired</li>
-                        <li>Search for a <b>Buddi</b>. to sit or wait for an owner to get in touch</li>
-                    </ol>
-                </div>
+            <div class="col">
+                <p class="text-center">Becoming A Sitter</p>
+                <ol>
+                    <li>Create a <b>Buddi</b>. account</li>
+                    <li>Make an amazing profile to get hired</li>
+                    <li>Search for a <b>Buddi</b>. to sit or wait for an owner to get in touch</li>
+                </ol>
             </div>
         </div>
-
+    </div>
 </div>
 
 <div class="container-fluid bg-custom-grey">
-        <div class="row row-cols-3 gy-5 p-5 justify-content-around">
-            <div class="card p-3 col-3">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Top tips for finding a vet</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">6th April 2021</h6>
-                    <a href="" class="card-link">Read More</a>
-                </div>
+    <div class="row row-cols-3 gy-5 p-5 justify-content-around">
+        <div class="card p-3 col-3">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Top tips for finding a vet</h5>
+                <h6 class="card-subtitle mb-2 text-muted">6th April 2021</h6>
+                <a href="" class="card-link">Read More</a>
             </div>
-            <div class="card p-3 col-3">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Top tips for finding a vet</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">6th April 2021</h6>
-                    <a href="" class="card-link">Read More</a>
-                </div>
-            </div>
-            <div class="card p-3 col-3">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Top tips for finding a vet</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">6th April 2021</h6>
-                    <a href="" class="card-link">Read More</a>
-                </div>
-            </div>
-            <h2 class="text-center"><a href="{% url 'blog:index'%}">More Featured Articles</a></h2>
         </div>
+        <div class="card p-3 col-3">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Top tips for finding a vet</h5>
+                <h6 class="card-subtitle mb-2 text-muted">6th April 2021</h6>
+                <a href="" class="card-link">Read More</a>
+            </div>
+        </div>
+        <div class="card p-3 col-3">
+            <img src="" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Top tips for finding a vet</h5>
+                <h6 class="card-subtitle mb-2 text-muted">6th April 2021</h6>
+                <a href="" class="card-link">Read More</a>
+            </div>
+        </div>
+        <h2 class="text-center"><a href="{% url 'blog:index'%}">More Featured Articles</a></h2>
+    </div>
 </div>
 
+{% endblock %}
 
 <!--<h1> Welcome to Buddi! What are you looking for?</h1>-->
 <!--<div>-->
@@ -131,10 +131,9 @@ Home
 <!--         alt="Generic picture of happy pet"/>-->
 <!--    <p>Want to read more pet news?-->
 <!--        &lt;!&ndash;Link to blog&ndash;&gt;Check out our blog!</a></p>-->
-	
-{% endblock %}
 
-=======
+
+
 
 <!--    <h1> Welcome to Buddi! What are you looking for?</h1>-->
 <!--	<div>-->

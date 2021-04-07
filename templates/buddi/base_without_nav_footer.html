@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% block description_block %}{% endblock %}">
     <meta name="keywords" content="{% block keyword_block %}{% endblock %}">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'main.css' %}">
+
     <meta name="author" content="Aidan Neil, Ioana Roca, Li-Jen Chen">
     <title>Buddi.
         {% block title_block %}
@@ -19,14 +18,19 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta name="viewport"
           10 content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    {% block additional_meta %}
+    {% endblock %}
 </head>
 <body>
 <div>
     {% block nav %}
     {% endblock %}
-    {% block body_block %}
-    {% endblock %}
+    <div class="content">
+        {% block body_block %}
+        {% endblock %}
+    </div>
     {% block footer %}
     {% endblock %}
 </div>
