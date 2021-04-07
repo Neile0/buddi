@@ -173,8 +173,7 @@ def add_animal(user, name, type, bio, age, sex, neutered, exercise, display,
 
 
 def add_sitter(userprofile, rate):
-    s = Sitter.objects.get_or_create(user=userprofile)[0]
-    s.hourly_rate = rate
+    s = Sitter.objects.get_or_create(user=userprofile, hourly_rate=rate)[0]
     s.save()
     return s
 
