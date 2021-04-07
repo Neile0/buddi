@@ -79,23 +79,19 @@ def user_profile(request, username):
     print(context_dict)
     return render(request, 'buddi/user_profile.html', context=context_dict)
 
+
 def sitter_profile(request, username):
-    
     context_dict = {'regions': get_parent_regions()}
     user = User.objects.all().get(username=username)
     userprofile = UserProfile.objects.all().get(user=user)
     sitter = Sitter.objects.all().get(user=userprofile)
     sitterop = SitterOperatesInRegion.objects.all().filter(sitter=sitter)
-    
+
     context_dict['current_user'] = user
     context_dict['userprofile'] = userprofile
     context_dict['sitter_reg'] = sitterop
-    
-<<<<<<< HEAD
+
     return render(request, 'buddi/sitter.html', context=context_dict)
-    
-=======
-    return render(request, 'buddi/sitter.html', context_dict)
 
 
 def delete_animal(request, animal_id):
@@ -103,15 +99,15 @@ def delete_animal(request, animal_id):
     user = animal.user.user.username
     animal.delete()
     return redirect(reverse('buddi:user',
-                    kwargs={'username' : user}))
+                            kwargs={'username': user}))
+
 
 def delete_opregion(request, sitteropreg_id):
     opreg = SitterOperatesInRegion.objects.all().get(id=sitteropreg_id)
     user = opreg.sitter.user.user.username
     opreg.delete()
     return redirect(reverse('buddi:sitter',
-                            kwargs={'username':user}))
->>>>>>> c760334311b54c9cb970b828a25bcb42ab985b36
+                            kwargs={'username': user}))
 
 
 @login_required
