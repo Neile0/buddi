@@ -5,23 +5,46 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, UserProfileForm
 from datetime import datetime
-from .models import Sitter, SitterOperatesInRegion, Comments, Ad
+from .models import *
 from .filters import AdFilter
 
 
 
 # Create your views here.
 def index(request):
-    #return HttpResponse("What are you looking for today?")
     return render(request, 'buddi/index.html')
 
-def search(request):
-    ads = AdFilter(request.GET, queryset = Ad.objects.all())
-    return render(request, 'buddi/search.html', {'filter':ads})
+def search(request, case, place):
+    #case should denote whether 
+    #this is a looking for a sitter/looking for a pet to sit situation
+    #place should be a region/region name, the differences can be easily fixed
+    ad_list=[]
+    sitter_list=[]
+    context_dict={}
+    if request.method == 'POST':
+       
+        context_dict['cases'] = case
+        
+        if case == 'sitter':
+            for s in Sitter.objects.all():
+                if s.region.name==place:
+                    sitter_list.append(s)
+                    
+        if case =='sit':   
+            for ad in Ad.objects.all():
+                if ad.user.region.name==place:
+                    ad_list.append(ad)
+                    
+
+    context_dict['ads'] = ad_list
+    context_dict['sitters'] = sitter_list
+    
+    return render(request, 'buddi/search.html', context_dict)
 
 
 def user_login(request):
     if request.method == 'POST':
+        
         username = request.POST.get('username')
         password = request.POST.get('password')
         
