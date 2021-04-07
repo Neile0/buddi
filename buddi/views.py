@@ -44,7 +44,7 @@ def search(request, case, place):
     context_dict['ads'] = ad_list
     context_dict['sitters'] = sitter_list
 
-    return render(request, 'buddi/search.html', context_dict)
+    return render(request, 'buddi/search.html', context=context_dict)
 
 
 def user_login(request):
@@ -77,7 +77,7 @@ def user_profile(request, username):
     context_dict['userprofile'] = userprofile
     context_dict['pets'] = animals
     print(context_dict)
-    return render(request, 'buddi/user_profile.html', context_dict)
+    return render(request, 'buddi/user_profile.html', context=context_dict)
 
 def sitter_profile(request, username):
     
@@ -91,7 +91,7 @@ def sitter_profile(request, username):
     context_dict['userprofile'] = userprofile
     context_dict['sitter_reg'] = sitterop
     
-    return render(request, 'buddi/sitter.html', context_dict)
+    return render(request, 'buddi/sitter.html', context=context_dict)
     
 
 
