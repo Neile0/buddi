@@ -44,6 +44,13 @@
 		    <li>
 			    <strong>Name: </strong>{{ pet.name }} </br>
 				<strong>Type: </strong>{{ pet.type }} </br>
+				<strong>Age: </strong>{{ pet.age }} </br>
+				<strong>Gender: </strong>{{ pet.sex }} </br>
+				<strong>Pet is neutered: </strong> {{ pet.is_neutered }} </br>
+				<strong>Exercise needed? </strong> {{ pet.requires_exercise }} </br>
+				{% if pet.requires_exercise == True %}
+				    <strong>Exercise requiremenets: </strong> {{ pet.exercise_requirement }} hours per day </br>
+				{% endif %}
 				<!--strong>Date: </strong>{{ pet.date }}-->
 				{% if pet.bio != '' %}
 				    <strong>Additional information: </strong>{{ pet.bio }} </br>
