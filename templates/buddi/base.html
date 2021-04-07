@@ -2,8 +2,6 @@
 {% extends 'buddi/base_without_nav_footer.html' %}
 {% load static %}
 
-<<<<<<< HEAD
-<html>
 {% block nav %}
 {% include 'buddi/navbar.html' %}
 {% endblock %}
@@ -12,24 +10,16 @@
 {% include 'buddi/footer.html' %}
 {% endblock %}
 
-=======
 
-</head>
-<body>
-<div>
-    {% include 'static/navbar.html' %}
-    {% block body_block %}
-    {% endblock %}
-    {% include 'static/footer.html' %}
-</div>
+{% block body_block %}
+{% endblock %}
+
 <div>
     <!--This is just for testing, feel free to delete if not important -->
-	<ul>
-	<li><a href="{% url 'buddi:login' %}">Login</a></li>
-	<li><a href="{% url 'buddi:logout' %}">Logout</a></li>
-	</ul>
+    <ul>
+        <li><a href="{% url 'buddi:login' %}">Login</a></li>
+        <li><a href="{% url 'buddi:logout' %}">Logout</a></li>
+    </ul>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-</body>
-</html>
->>>>>>> 70d11fb6e54cb35bc10f964794a24e2150ed3600
+
+

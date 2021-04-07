@@ -7,7 +7,7 @@
         </div>
         <div class="nav navbar-right">
             <ul class="nav navbar-nav nav-ul">
-                <li><a class="p-3" href="{% url 'blog:index'">Blog</a></li>
+                <li><a class="p-3" href="{% url 'blog:index'%}">Blog</a></li>
                 {% if user.is_authenticated %}
                 <li><a class="p-3" href="{% url 'buddi:login' %}">My Profile</a></li>
                 {% else %}

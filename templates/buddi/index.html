@@ -18,7 +18,7 @@ Home
                     <div class="input-group-lg">
                         <span class="input-group-text no-border-radius">Looking</span>
                     </div>
-                    <select class="form-control custom-select no-border-radius" name="case">
+                    <select class="form-control custom-select no-border-radius">
                         <option selected value="sitter">For A Sitter</option>
                         <option value="sit">To Sit</option>
                     </select>
@@ -26,9 +26,9 @@ Home
                     <div class="input-group-lg">
                         <span class="input-group-text no-border-radius">In</span>
                     </div>
-                    <select class="form-control custom-select no-border-radius" name="place">
-                        <option selected value="Glasgow">Glasgow</option>
-                        <option value="Edinburgh">Edinburgh</option>
+                    <select class="form-control custom-select no-border-radius">
+                        <option selected>Glasgow</option>
+                        <option value="1">Edinburgh</option>
                     </select>
                     <div class="input-group-btn input-group-lg bg-primary">
                         <button id="btn-search" type="button" class="btn btn-primary no-border-radius">Search</button>
@@ -131,41 +131,41 @@ Home
 <!--         alt="Generic picture of happy pet"/>-->
 <!--    <p>Want to read more pet news?-->
 <!--        &lt;!&ndash;Link to blog&ndash;&gt;Check out our blog!</a></p>-->
-
-    {% endblock %}
-{% block footer %}
-    <h1> Welcome to Buddi! What are you looking for?</h1>
-	<div>
-	    <!-- This is where the search bar goes -->
-	</div>
-	<div>
-	    <a href="{% url 'buddi:search' %}">Looking for a pet to sit</a>
-	</div>
-    <div>
-	    <a href="{% url 'buddi:find-sitter' %}">Find fit sitter to take care your buddi here</a>
-	</div>
-    <div>
-	    <a href="{% url 'buddi:register' %}">Sign up here</a>
-	</div>
-
-	
-	<div>
-	    <!-- This is an attempt at having the blog part in somehow -->
-		<img src="{% static 'images/vet.jpg' %}"
-		    alt="Picture of a vet" />
-		<p>Looking for a vet?
-		<!--Link to blog-->Here are our recommendations!</p>
-		
-		<img src="{% static 'images/pet_store.jpg' %}"
-		    alt="Picture of a pet store" />
-		<p>Looking for a pet sore?
-		<!--Link to blog-->This is our favourite!</p>
-		
-		<img src="{% static 'images/pet_news.jpg' %}"
-		    alt="Generic picture of happy pet" />
-		<p>Want to read more pet news?
-		<a href="{% url 'blog:index' %}">Check out our blog!</a></p>
-    </div>
 	
 {% endblock %}
->>>>>>> 70d11fb6e54cb35bc10f964794a24e2150ed3600
+
+=======
+
+<!--    <h1> Welcome to Buddi! What are you looking for?</h1>-->
+<!--	<div>-->
+<!--	    &lt;!&ndash; This is where the search bar goes &ndash;&gt;-->
+<!--	</div>-->
+<!--	<div>-->
+<!--	    <a href="{% url 'buddi:search' %}">Looking for a pet to sit</a>-->
+<!--	</div>-->
+<!--    <div>-->
+<!--	    <a href="{% url 'buddi:find-sitter' %}">Find fit sitter to take care your buddi here</a>-->
+<!--	</div>-->
+<!--    <div>-->
+<!--	    <a href="{% url 'buddi:register' %}">Sign up here</a>-->
+<!--	</div>-->
+
+<!--	-->
+<!--	<div>-->
+<!--	    &lt;!&ndash; This is an attempt at having the blog part in somehow &ndash;&gt;-->
+<!--		<img src="{% static 'images/vet.jpg' %}"-->
+<!--		    alt="Picture of a vet" />-->
+<!--		<p>Looking for a vet?-->
+<!--		&lt;!&ndash;Link to blog&ndash;&gt;Here are our recommendations!</p>-->
+<!--		-->
+<!--		<img src="{% static 'images/pet_store.jpg' %}"-->
+<!--		    alt="Picture of a pet store" />-->
+<!--		<p>Looking for a pet sore?-->
+<!--		&lt;!&ndash;Link to blog&ndash;&gt;This is our favourite!</p>-->
+<!--		-->
+<!--		<img src="{% static 'images/pet_news.jpg' %}"-->
+<!--		    alt="Generic picture of happy pet" />-->
+<!--		<p>Want to read more pet news?-->
+<!--		<a href="{% url 'blog:index' %}">Check out our blog!</a></p>-->
+<!--    </div>-->
+
