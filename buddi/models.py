@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 
+
 # Written by Aidan
 
 class IntegerRangeField(models.IntegerField):
@@ -18,9 +19,18 @@ class IntegerRangeField(models.IntegerField):
 class Region(models.Model):
     REGION_LENGTH = 120
     name = models.CharField(max_length=REGION_LENGTH, unique=True, primary_key=True)
-    #is_subregion_of = models.ForeignKey('self', on_delete=models.CASCADE, default='UK')
+    is_subregion_of = models.ForeignKey('self', on_delete=models.CASCADE, null=True, related_name='parent_region')
+    is_parent_region = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        if self.is_subregion_of is not None:
+            self.is_parent_region = False
+        super(Region, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
+
+
 
 
 class UserProfile(models.Model):
@@ -85,7 +95,7 @@ class Animal(models.Model):
         self.image_dir = slugify(self.user.profile_url + self.name)
 
     def __str__(self):
-        return "(" + self.name + "," +self.user.user.username + ")"
+        return "(" + self.name + "," + self.user.user.username + ")"
 
 
 class AnimalImages(models.Model):
@@ -97,6 +107,9 @@ class AnimalImages(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_directory_path)
 
+    class Meta:
+        verbose_name = "Animal Images"
+
     def __str__(self):
         return self.DIR + self.animal.image_dir + self.image
 
@@ -104,7 +117,7 @@ class AnimalImages(models.Model):
 class Sitter(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     hourly_rate = models.DecimalField(max_digits=4, decimal_places=1)
-    
+
     def __str__(self):
         return self.user.user.username
 
@@ -112,7 +125,10 @@ class Sitter(models.Model):
 class SitterOperatesInRegion(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    
+
+    class Meta:
+        verbose_name = "Sitter's Regions"
+
     def __str__(self):
         return (self.sitter.user.user.username + " in " + self.region.name)
 
@@ -121,12 +137,15 @@ class Comments(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     rating = IntegerRangeField(min_value=0, max_value=10)
 
+    class Meta:
+        verbose_name = "Comments"
+
 
 class Ad(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     type = models.ForeignKey(AnimalType, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         show = self.animal.name + ", " + self.type.__str__()
         return show

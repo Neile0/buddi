@@ -7,10 +7,12 @@ Home
 {% endblock %}
 
 {% block body_block %}
+
+
 <div class="jumbotron text-center vertical-center" id="index-hero">
     <div class="container">
         <h1 class="display-1 fw-bold">Buddi.</h1>
-        <h2 class="display-12">Helping you find a <b>Buddi</b> to look after your <b>Buddi</b></h2>
+        <h2 class="display-6">Helping you find a <b>Buddi</b> to look after your <b>Buddi</b></h2>
         <div class="row" id="index-hero-input">
             <form class="form-inline" method="post" action="/search/">
                 {% csrf_token %}
@@ -27,8 +29,9 @@ Home
                         <span class="input-group-text no-border-radius">In</span>
                     </div>
                     <select class="form-control custom-select no-border-radius">
-                        <option selected>Glasgow</option>
-                        <option value="1">Edinburgh</option>
+                        {% for region in regions %}
+                        <option value="{{ region.name }}">{{ region.name}}</option>
+                        {% endfor %}
                     </select>
                     <div class="input-group-btn input-group-lg bg-primary">
                         <button id="btn-search" type="button" class="btn btn-primary no-border-radius">Search</button>
@@ -131,8 +134,6 @@ Home
 <!--         alt="Generic picture of happy pet"/>-->
 <!--    <p>Want to read more pet news?-->
 <!--        &lt;!&ndash;Link to blog&ndash;&gt;Check out our blog!</a></p>-->
-
-
 
 
 <!--    <h1> Welcome to Buddi! What are you looking for?</h1>-->

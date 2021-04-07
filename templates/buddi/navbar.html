@@ -30,8 +30,9 @@
                         <span class="input-group-text no-border-radius">In</span>
                     </div>
                     <select class="form-control custom-select no-border-radius">
-                        <option selected>Glasgow</option>
-                        <option value="1">Edinbrugh</option>
+                        {% for region in regions %}
+                        <option value="{{ region.name }}">{{ region.name}}</option>
+                        {% endfor %}
                     </select>
                     <div class="input-group-btn input-group-s">
                         <button id="btn-search" type="submit" name="submit" class="btn btn-primary no-border-radius">
