@@ -1,7 +1,5 @@
 import os
 
-from django.db.models import Model
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'buddi_project.settings')
 
 import django
