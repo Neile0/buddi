@@ -2,27 +2,28 @@
 {% load static %}
 
 {% block title_block %}
-    Search your sitter
+Search your sitter
 {% endblock %}
 
 {% block body_block%}
-    {% for case in sitterM %}
-        <table style="width: 20%">
-                <tr>
-                    <th>Self graph</th>
-                    <th> Detail</th>
-                </tr>
-                <tr>
-                    <td>case.profile_image</td>
-                    <td>case.name</td>
-                </tr>
-                <tr>
-                    <td></td><td>comment</td>
-                </tr>
-                <tr>
-                    <td></td><td>sitterR.region</td>
-                </tr>
-
-        </table>
-    {% endfor %}
+{% for case in sitterM %}
+<table style="width: 20%">
+    <tr>
+        <th>Self graph</th>
+        <th> Detail</th>
+    </tr>
+    <tr>
+        <td>case.profile_image</td>
+        <td>case.name</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>comment</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>sitterR.region</td>
+    </tr>
+</table>
+{% endfor %}
 {% endblock %}

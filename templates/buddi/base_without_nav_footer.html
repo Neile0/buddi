@@ -25,8 +25,10 @@
 <div>
     {% block nav %}
     {% endblock %}
-    {% block body_block %}
-    {% endblock %}
+    <div class="content">
+        {% block body_block %}
+        {% endblock %}
+    </div>
     {% block footer %}
     {% endblock %}
 </div>

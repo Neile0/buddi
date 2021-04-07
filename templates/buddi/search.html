@@ -2,29 +2,29 @@
 {% load static %}
 
 {% block title_block %}
-    Search page
+Search page
 {% endblock %}
 
 {% block body_block %}
-   {% if cases == sit %}
-       {% if ads %}
-	       {% for ad in ads %}
-		        <li>
-                    {{ ad }}
-				</li>
-			{% endfor %}
-		{% else %}
-		    No results were found for this sit search. 
-		{% endif %}
-	{% elif cases == sitter %}
-	    {% if sitters %}
-		    {% for sitter in sitters %}
-			    <li>
-				    {{sitter}}
-				</li>
-			{% endfor %}
-		{% else %}
-		    No results were found for thissitter search.
-		{% endif %}
-	{% endif %}
+{% if cases == sit %}
+{% if ads %}
+{% for ad in ads %}
+<li>
+    {{ ad }}
+</li>
+{% endfor %}
+{% else %}
+No results were found for this sit search.
+{% endif %}
+{% elif cases == sitter %}
+{% if sitters %}
+{% for sitter in sitters %}
+<li>
+    {{sitter}}
+</li>
+{% endfor %}
+{% else %}
+No results were found for thissitter search.
+{% endif %}
+{% endif %}
 {% endblock %}
