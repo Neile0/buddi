@@ -93,7 +93,7 @@ def sitter_profile(request, username):
     
     return render(request, 'buddi/sitter.html', context_dict)
 
-
+@login_required
 def delete_animal(request, animal_id):
     animal = Animal.objects.all().get(id=animal_id)
     user = animal.user.user.username
@@ -101,12 +101,15 @@ def delete_animal(request, animal_id):
     return redirect(reverse('buddi:user',
                     kwargs={'username' : user}))
 
+@login_required
 def delete_opregion(request, sitteropreg_id):
     opreg = SitterOperatesInRegion.objects.all().get(id=sitteropreg_id)
     user = opreg.sitter.user.user.username
     opreg.delete()
     return redirect(reverse('buddi:sitter',
                             kwargs={'username':user}))
+
+    
 
 
 @login_required
