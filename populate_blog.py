@@ -48,20 +48,43 @@ def populate():
     for x in range(1, 6):
         Shop_Pic_list.append("populate_blog/Shop_Pic_" + str(x) + ".jpg")
 
+    New_image =[]
+    vet_image=[]
+    shop_image=[]
+
+    def addImgToObj(pathList , Tlist):
+
+        for x in pathList:
+            z = Image.open(x)
+            Simg = ImageFile.open(z)
+            z.close()
+            Tlist.append(Simg)
+            Simg.close()
+
+
+
+
+
+
+
+    addImgToObj(News_Pic_list,New_image )
+    addImgToObj(Vet_Pic_list, vet_image)
+    addImgToObj(Shop_Pic_list, shop_image )
+
+
+
 
     for x in range(0,5):
         add_news(News_topic_list[x], File(open(News_contend_list[x], encoding="utf-8")),
-                 ImageFile(
-                     Image.open(News_Pic_list[x]).load()
-                 ))
+                 New_image[x]
+                 )
         add_vets(Vets_topic_list[x], File(open(Vet_contend_list[x], encoding="utf-8")),
-                 ImageFile(
-                     Image.open(Vet_Pic_list[x]).load()
-                 ))
+                 vet_image[x]
+                 )
         add_shop(Shops_topic_list[x], File(open(Shop_contend_list[x], encoding="utf-8")),
-                 ImageFile(
-                     Image.open(Shop_Pic_list[x]).load()
-                 ))
+                 shop_image[x]
+
+                 )
 
 
 
@@ -86,5 +109,5 @@ def add_shop(topic, contend, image):
 
 
 if __name__ == '__main__':
-    print('Starting Buddi population script...')
+    print('Starting Blog population script...')
     populate()
