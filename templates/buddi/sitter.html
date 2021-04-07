@@ -1,0 +1,36 @@
+{% extends 'buddi/base.html' %}
+{% load static %}
+
+{% block title_block %}
+Sitter Profile
+{% endblock %}
+
+{% block body_block %}
+    <div>
+	    {% if user == current_user and user.is_authenticated %}
+	         <h2>My Sitter Profile</h2>
+			 <a href="{% url 'buddi:logout' %}">Logout</a>
+	    {% else %}
+	        <h2>Sitter Profile - {{current_user.username }}</h2> 
+		{% endif %}
+		
+	</div>
+	
+	<div>
+	    <strong>Name: </strong>{{ current_user.first_name }} {{ current_user.last_name}} </br>
+		<strong>Location: </strong>{{ userprofile.region }} </br>
+		<strong>Operates in: </strong>
+		{% for reg in sitter_reg %}
+		    {{ reg.region }}
+		{% endfor %}
+		</br>
+		<strong>Rating: </strong> </br>
+	</div>
+	<div>
+	    {% if user.is_authenticated %}
+		    {% if user != current_user %}
+			    <strong>Rate this sitter: </strong> </br>
+			{% endif %}
+		{% endif %}
+	</div>
+{% endblock %}

@@ -6,11 +6,12 @@
 
 {% block body_block %}
     <div>
+	<!-- current_user is actually the one whose page we are trying to view, not the user using buddi, I am sorry -->
 	    {% if user == current_user and user.is_authenticated %}
 	         <h2>My Profile</h2>
 			 <a href="{% url 'buddi:logout' %}">Logout</a>
 	    {% else %}
-	        <h2>Owner Profile - {{current_user.username }}</h2> <!--Should these be replaced by their names/usernames? -->
+	        <h2>Owner Profile - {{current_user.username }}</h2> 
 		{% endif %}
 		
 	</div>
@@ -25,7 +26,7 @@
 			    <strong>Rate this owner: </strong> </br>
 			{% endif %}
 			{% if userprofile.is_sitter %}
-			<a href=""<!--This should be a link to the pet sitter profile of an owner-->I am also a sitter. Click here to see my profile!</a>
+			<a href="{% url 'buddi:sitter' current_user.username %}">I am also a sitter. Click here to see my profile!</a>
 			{% endif %}
 		{% endif %}
 	</div>
