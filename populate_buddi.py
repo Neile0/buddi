@@ -16,7 +16,7 @@ def populate():
         {'name': 'West End', 'sub': 'Glasgow'}
     ]
 
-    types = ['Cat', 'Dog', 'Bunny', 'Parrot']
+    types = ['cat', 'dog', 'bunny', 'parrot', 'fish',]
 
     animals_1 = [
         {'name': 'Mindy',
@@ -68,7 +68,80 @@ def populate():
          'exreq': 0,
          'display': True},
     ]
-
+    
+    animals_3=[
+        {'name': 'Polly',
+         'type': 'parrot',
+         'bio': 'Gets lonely if I leave for longer time periods',
+         'age': 1,
+         'sex': 'f',
+         'neutered': 'N/A',
+         'exercise': False,
+         'exreq': 0,
+         'display': True,}]
+    
+    animals_4=[
+        {'name': 'Poppy',
+         'type': 'dog',
+         'bio': 'The cutest friend you could have',
+         'age': 4,
+         'sex': 'M',
+         'neutered': 'Y',
+         'exercise': True,
+         'exreq': 1,
+         'display': True,},
+        {'name': 'Rex',
+         'type': 'fish',
+         'bio': "Doesn't say much",
+         'age': 1,
+         'sex': 'M',
+         'neutered': 'N/A',
+         'exercise': False,
+         'exreq': 0,
+         'display': True,},
+        {'name': 'Alfred',
+         'type': 'fish',
+         'bio': 'Golden and very pretty',
+         'age': 7,
+         'sex': 'F',
+         'neutered': 'N/A',
+         'exercise': False,
+         'exreq': 0,
+         'display': True,}
+        ]
+        
+    animals_5=[
+       {'name': 'Arthur',
+         'type': 'dog',
+         'bio': 'Large dog, must be taken on long walks daily',
+         'age': 6,
+         'sex': 'M',
+         'neutered': 'Y',
+         'exercise': True,
+         'exreq': 4,
+         'display': True,},
+        {'name': 'Perry',
+         'type': 'bunny',
+         'bio': 'Small and silent',
+         'age': 2,
+         'sex': 'F',
+         'neutered': 'N',
+         'exercise': False,
+         'exreq': 0,
+         'display': True,}]
+    
+    animals_6=[
+        {'name': 'Annelise',
+         'type': 'cat',
+         'bio': 'Does not like being alone',
+         'age': 3,
+         'sex': 'F',
+         'neutered': 'Y',
+         'exercise': False,
+         'exreq': 0,
+         'display': True,}]
+        
+    
     user_profiles = [
         {'bio': 'Owner of two nice pets.',
          'contact_no': '072347',
@@ -80,6 +153,26 @@ def populate():
          'region': 'Edinburgh',
          'sitter': True,
          'pets': animals_2, },
+        {'bio': 'I sometimes need help with Polly, happy to help too!',
+         'contact_no': '074875674',
+         'region': 'Glasgow',
+         'sitter': True,
+         'pets': animals_3, },
+        {'bio': 'I am looking for someone to take care of my pets while I am away with work',
+         'contact_no': '0775533',
+         'region': 'Edinburgh',
+         'sitter': False,
+         'pets': animals_4, },
+        {'bio': 'Animal enthusiast',
+         'contact_no': '098877564',
+         'region': 'London',
+         'sitter': True,
+         'pets': animals_5, },
+        {'bio': 'Cat needs a good sitter',
+         'contact_no': '09884534',
+         'region': 'London',
+         'sitter': False,
+         'pets': animals_6, },
     ]
 
     users = [
@@ -96,15 +189,39 @@ def populate():
          'email': 'tom@henry.com',
          'password': 'newpass890',
          'profile': user_profiles[1], },
+        {'username': 'pamelared',
+         'first_name': 'Pamela',
+         'last_name': 'Red',
+         'email': 'pamela@red.com',
+         'password': 'pollyiscute',
+         'profile': user_profiles[2], },
+        {'username': 'alexbrown',
+         'first_name': 'Alex',
+         'last_name': 'Brown',
+         'email': 'alex@brown.com',
+         'password': 'passpass3',
+         'profile': user_profiles[3], },
+        {'username': 'calebcaleb',
+         'first_name': 'Caleb',
+         'last_name': 'Caleb',
+         'email': 'caelb@caleb.com',
+         'password': 'iwillforgetthis32',
+         'profile': user_profiles[4], },
+        {'username': 'laurengrey',
+         'first_name': 'Lauren',
+         'last_name': 'Grey',
+         'email': 'lauren@grey.com',
+         'password': 'yeyleyhey6',
+         'profile': user_profiles[5], },
     ]
 
-    rates = {'tomhenry': 34.5, }
+    rates = {'tomhenry': 34.5, 'pamelared':45, 'calebcaleb':50}
 
     for rg in regions:
         add_region(rg['name'], rg['sub'])
 
-    # for ty in types:
-    #   t = add_type(ty)
+    for ty in types:
+        t = add_type(ty)
 
     for usr in users:
         u = add_user(usr['username'], usr['first_name'], usr['last_name'],
