@@ -1,10 +1,9 @@
-from django.test import TestCase, RequestFactory
-from blog.apps import BlogConfig
 from django.apps import apps
-from .models import *
+from django.test import TestCase
+
+from blog.apps import BlogConfig
 from buddi.apps import BuddiConfig
-from .views import user_profile
-import populate_buddi
+from .models import *
 
 
 # Create your tests here.
@@ -24,68 +23,6 @@ class buddiReportConfigTest(TestCase):
 
 
 class pop_buddi_script_test(TestCase):
-    regions = [
-        {'name': 'Glasgow', 'sub': None},
-        {'name': 'Edinburgh', 'sub': None},
-        {'name': 'London', 'sub': None},
-        {'name': 'West End', 'sub': 'Glasgow'}
-    ]
-
-    types = ['Cat', 'Dog', 'Bunny', 'Parrot']
-
-    animals_1 = [
-        {'name': 'Mindy',
-         'type': 'cat',
-         'bio': 'Very smart but shy at first.',
-         'age': 2,
-         'sex': 'F',
-         'neutered': 'Y',
-         'exercise': False,
-         'exreq': 0,
-         'display': True, },
-        {'name': 'Bob',
-         'type': 'dog',
-         'bio': 'Friendly',
-         'age': 5,
-         'sex': 'M',
-         'neutered': 'N',
-         'exercise': True,
-         'exreq': 2,
-         'display': True, }
-    ]
-
-    animals_2 = [
-        {'name': 'Hoppy',
-         'type': 'bunny',
-         'bio': 'Does not do much, easy to care for.',
-         'age': 1,
-         'sex': 'F',
-         'neutered': 'N',
-         'exercise': False,
-         'exreq': 0,
-         'display': False, },
-        {'name': 'Fred',
-         'type': 'cat',
-         'bio': 'Needs to be fed often or will scream',
-         'age': 7,
-         'sex': 'M',
-         'neutered': 'Y',
-         'exercise': False,
-         'exreq': 0,
-         'display': True, },
-        {'name': 'Dog',
-         'type': 'cat',
-         'bio': "Thinks he can bark. He can't.",
-         'age': 4,
-         'sex': 'M',
-         'neutered': 'Y',
-         'exercise': False,
-         'exreq': 0,
-         'display': True},
-    ]
-
-
-
 
 
     def setUp(self):
@@ -133,4 +70,38 @@ class pop_buddi_script_test(TestCase):
             self.assertEqual(UserProfile.objects.get(pk =x).contact_no, user_profiles[x].get('contact_no'))
             self.assertEqual(UserProfile.objects.get(pk=x).region, user_profiles[x].get('region'))
             self.assertEqual(UserProfile.objects.get(pk=x).sitter, user_profiles[x].get('sitter'))
+
+
+
+    def check_animal_data(self,pk,name, type, bio, age, sex, neutered, exercise, exreq, display ):
+        self.assertEqual(Animal.objects.get(pk=pk).name, name)
+        self.assertEqual(Animal.objects.get(pk=pk).type, type)
+        self.assertEqual(Animal.objects.get(pk=pk).bio, bio)
+        self.assertEqual(Animal.objects.get(pk=pk).age, age)
+        self.assertEqual(Animal.objects.get(pk=pk).sex, sex)
+        self.assertEqual(Animal.objects.get(pk=pk).neutered, neutered)
+        self.assertEqual(Animal.objects.get(pk=pk).exercise, exercise)
+        self.assertEqual(Animal.objects.get(pk=pk).exreq, exreq)
+        self.assertEqual(Animal.objects.get(pk=pk).display, display)
+
+    def test_animal(self):
+
+        self.check_animal_data(1,'Mindy', 'cat', 'Very smart but shy at first.', 2,'F','Y',
+                               False, 0,True)
+        self.check_animal_data(2, 'Bob', 'dog', 'Friendly', 5, 'M', 'N',
+                               True, 2, True)
+        self.check_animal_data(3, 'Hoppy', 'bunny', 'Does not do much, easy to care for.',
+                               1, 'F', 'N',
+                               False, 0, False)
+        self.check_animal_data(4, 'Fred', 'cat', 'Needs to be fed often or will scream',
+                               7, 'M', 'Y',
+                               False, 0, True)
+        self.check_animal_data(5, 'Dog', 'cat', "Thinks he can bark. He can't.",
+                               4, 'M', 'Y',
+                               False, 0, True)
+
+
+
+
+
 
