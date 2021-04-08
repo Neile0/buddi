@@ -20,9 +20,10 @@ Register
                                 <h3 class="fw-bold display-4"><a href="{% url 'buddi:index' %}">Buddi.</a></h3>
                             </div>
                             <div class="card-subtitle">
-                                <p>Register a <b> Buddi.</b> account</p>
+                                <p>Register for a <b> Buddi.</b> account</p>
                             </div>
                             <form id="register-form" method="post" action="{% url 'buddi:register' %}">
+                                {% csrf_token %}
                                 <input class="mb-4 input-group form-control" type="text" name="username"
                                        placeholder="Username"/>
                                 <input class="mb-4 input-group form-control" type="password" name="password"
@@ -31,12 +32,16 @@ Register
                                        placeholder="******* (re-enter)"/>
                                 <input class="mb-4 input-group form-control" type="email" name="email"
                                        placeholder="email@example.com"/>
+                                <select class="form-control custom-select no-border-radius">
+                                    {% for region in regions %}
+                                    <option value="{{ region.name }}">{{ region.name}}</option>
+                                    {% endfor %}
+                                </select>
                                 <input class="btn mb-4 btn-primary no-border-radius" type="submit" value="Register"/>
                             </form>
-                            <a>Forgotten password?</a>
                             <hr>
-                            <p>Dont have an account</p>
-                            <a href="{% url 'buddi:register' %}">Register here</a>
+                            <p>Already have an account</p>
+                            <a href="{% url 'buddi:login' %}">Sign in here</a>
                         </div>
                     </div>
                 </div>
