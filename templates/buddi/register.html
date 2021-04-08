@@ -1,4 +1,4 @@
-{% extends 'buddi/base.html' %}
+{% extends 'buddi/base_without_nav_footer.html' %}
 {% load static %}
 
 {% block title_block %}
@@ -6,6 +6,52 @@ Register
 {% endblock %}
 
 {% block body_block %}
+<div class="container-fluid bg-primary-lighter">
+    <div class="container d-flex align-items-center min-vh-100 py-3 py-md-0">
+        <div class="container col-8">
+            <div class="card login-reg-card">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="{% static 'images" alt="..." class="login-reg-card-image"/>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <div class="brand-wrapper">
+                                <h3 class="fw-bold display-4"><a href="{% url 'buddi:index' %}">Buddi.</a></h3>
+                            </div>
+                            <div class="card-subtitle">
+                                <p>Register for a <b> Buddi.</b> account</p>
+                            </div>
+                            <form id="register-form" method="post" action="{% url 'buddi:register' %}">
+                                {% csrf_token %}
+                                <input class="mb-4 input-group form-control" type="text" name="username"
+                                       placeholder="Username"/>
+                                <input class="mb-4 input-group form-control" type="password" name="password"
+                                       placeholder="*******"/>
+                                <input class="mb-4 input-group form-control" type="password" name="password-confirm"
+                                       placeholder="******* (re-enter)"/>
+                                <input class="mb-4 input-group form-control" type="email" name="email"
+                                       placeholder="email@example.com"/>
+                                <select class="form-control custom-select no-border-radius">
+                                    {% for region in regions %}
+                                    <option value="{{ region.name }}">{{ region.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <input class="btn mb-4 btn-primary no-border-radius" type="submit" value="Register"/>
+                            </form>
+                            <hr>
+                            <p>Already have an account</p>
+                            <a href="{% url 'buddi:login' %}">Sign in here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
 <h1>Please fill up the following blanks to complete the register</h1>
 {% if registered %}
 Rango says: <strong>thank you for registering!</strong>
@@ -22,4 +68,3 @@ Rango says: <strong>register here!</strong><br/>
     <input type="submit" name="submit" value="Register"/>
 </form>
 {% endif %}
-{% endblock %}

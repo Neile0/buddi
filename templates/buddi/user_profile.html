@@ -56,6 +56,9 @@
 				{% if pet.bio != '' %}
 				    <strong>Additional information: </strong>{{ pet.bio }} </br>
 				{% endif %}
+				{% if user.is_authenticated and user == current_user %}
+				    <a href="{% url 'buddi:delete_animal' pet.id %}"> Delete {{ pet.name }}</a>
+				{% endif %}
 			</li>
 			{% endif %}
 		{% endfor %}

@@ -22,6 +22,7 @@ Sitter Profile
 		<strong>Operates in: </strong>
 		{% for reg in sitter_reg %}
 		    {{ reg.region }}
+			<a href="{% url 'buddi:delete_opregion' reg.id %}">Delete {{reg.region}}</a> </br>
 		{% endfor %}
 		</br>
 		<strong>Rating: </strong> </br>

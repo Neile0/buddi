@@ -1,11 +1,16 @@
 from django.shortcuts import render
 
-from .models import *
+
+#
+# def get_parent_regions():
+#     regions = Region.objects.filter(is_parent_region=True)
+#     return [r for r in regions]
 
 
 # Create your views here.
 
 def index(request):
+    # context_dict = {'regions': get_parent_regions()}
     return render(request, 'blog/index.html')
 
 

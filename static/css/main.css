@@ -89,3 +89,7 @@ min-width: 500px ;}
 .no-border-radius{
     border-radius: 0 !important;
 }
+
+.login-card{
+    max-width: 1000px;
+}
