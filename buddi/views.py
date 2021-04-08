@@ -16,7 +16,6 @@ def get_parent_regions():
 # Create your views here.
 def index(request):
     context_dict = {'regions': get_parent_regions()}
-    print(context_dict)
     return render(request, 'buddi/index.html', context=context_dict)
 
 
@@ -76,7 +75,7 @@ def user_profile(request, username):
     context_dict['current_user'] = user
     context_dict['userprofile'] = userprofile
     context_dict['pets'] = animals
-    print(context_dict)
+
     return render(request, 'buddi/user_profile.html', context=context_dict)
 
 
@@ -92,6 +91,7 @@ def sitter_profile(request, username):
     context_dict['sitter_reg'] = sitterop
 
     return render(request, 'buddi/sitter.html', context=context_dict)
+
 
 @login_required
 def delete_animal(request, animal_id):
@@ -110,26 +110,29 @@ def delete_opregion(request, sitteropreg_id):
     return redirect(reverse('buddi:sitter',
                             kwargs={'username': user}))
 
+
 @login_required
 def add_pet(request, username):
+    context_dict = {'regions':get_parent_regions()}
     user = User.objects.all().get(username=username)
     userprofile = UserProfile.objects.all().get(user=user)
     form = AnimalForm()
-    if request.method=='POST':
+    if request.method == 'POST':
         form = AnimalForm(request.POST)
-        
+
         if form.is_valid():
             animal = form.save(commit=False)
             animal.user = userprofile
-            animal.image_dir=slugify(userprofile.profile_url + animal.name)
+            animal.image_dir = slugify(userprofile.profile_url + animal.name)
             animal.save()
-            
+
             return redirect(reverse('buddi:user',
-                            kwargs={'username': user}))
+                                    kwargs={'username': user}))
         else:
             print(form.errors)
-    context_dict = {'form': form, 'current_user': user}
-    return render(request, 'buddi/add_pet.html', context=context_dict)   
+    context_dict['form'] = form
+    context_dict['current_user'] = user
+    return render(request, 'buddi/add_pet.html', context=context_dict)
 
 
 @login_required
@@ -138,23 +141,22 @@ def add_opreg(request, username):
     userprofile = UserProfile.objects.all().get(user=user)
     sitter = Sitter.objects.all().get(user=userprofile)
     form = OpregForm()
-    
-    if request.method=='POST':
+
+    if request.method == 'POST':
         form = OpregForm(request.POST)
-        
+
         if form.is_valid():
             opreg = form.save(commit=False)
             opreg.sitter = sitter
             opreg.save()
-        
+
             return redirect(reverse('buddi:sitter',
-                            kwargs={'username': user}))
+                                    kwargs={'username': user}))
         else:
             print(form.errors)
     context_dict = {'form': form, 'current_user': user}
     return render(request, 'buddi/add_opreg.html', context=context_dict)
-    
-    
+
 
 @login_required
 def user_logout(request):
@@ -199,7 +201,6 @@ def find_sitter(request):
                     'sitterM': Sitter.objects.all(),
                     'sitterR': SitterOperatesInRegion.objects.all(),
                     'comment': Comments.objects.all(),
-
                     }
 
     return render(request, 'buddi/sitter_profile.html', context=context_dict)
