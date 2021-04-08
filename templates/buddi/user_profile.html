@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block title_block %}
+{{current_user.username }}
 {% endblock %}
 
 {% block body_block %}
@@ -67,4 +68,8 @@
 	    No pets to display.
 	{% endif %}
 	</div>
+	<div>
+	{% if user.is_authenticated and user == current_user %}
+	    <a href="{% url 'buddi:add_pet' user %}"><strong>Add a pet</strong></a>
+	{% endif %}
 {% endblock %}

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .forms import UserForm, UserProfileForm
+from .forms import UserForm, UserProfileForm, AnimalForm
 from .models import *
 
 
@@ -110,8 +110,27 @@ def delete_opregion(request, sitteropreg_id):
     return redirect(reverse('buddi:sitter',
                             kwargs={'username': user}))
 
+@login_required
+def add_pet(request, username):
+    user = User.objects.all().get(username=username)
+    userprofile = UserProfile.objects.all().get(user=user)
+    form = AnimalForm()
+    if request.method=='POST':
+        form = AnimalForm(request.POST)
+        
+        if form.is_valid():
+            animal = form.save(commit=False)
+            animal.user = userprofile
+            animal.image_dir=slugify(userprofile.profile_url + animal.name)
+            animal.save()
+            
+            return redirect(reverse('buddi:user',
+                            kwargs={'username': user}))
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'current_user': user}
+    return render(request, 'buddi/add_pet.html', context=context_dict)        
     
-
 
 @login_required
 def user_logout(request):
