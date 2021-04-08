@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .forms import UserForm, UserProfileForm, AnimalForm
+from .forms import UserForm, UserProfileForm, AnimalForm, OpregForm
 from .models import *
 
 
@@ -129,7 +129,31 @@ def add_pet(request, username):
         else:
             print(form.errors)
     context_dict = {'form': form, 'current_user': user}
-    return render(request, 'buddi/add_pet.html', context=context_dict)        
+    return render(request, 'buddi/add_pet.html', context=context_dict)   
+
+
+@login_required
+def add_opreg(request, username):
+    user = User.objects.all().get(username=username)
+    userprofile = UserProfile.objects.all().get(user=user)
+    sitter = Sitter.objects.all().get(user=userprofile)
+    form = OpregForm()
+    
+    if request.method=='POST':
+        form = OpregForm(request.POST)
+        
+        if form.is_valid():
+            opreg = form.save(commit=False)
+            opreg.sitter = sitter
+            opreg.save()
+        
+            return redirect(reverse('buddi:sitter',
+                            kwargs={'username': user}))
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'current_user': user}
+    return render(request, 'buddi/add_opreg.html', context=context_dict)
+    
     
 
 @login_required

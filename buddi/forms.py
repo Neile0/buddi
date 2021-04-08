@@ -1,8 +1,7 @@
-
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import UserProfile, Region, Animal, AnimalType
+from .models import UserProfile, Region, Animal, AnimalType, SitterOperatesInRegion
 
 
 class UserForm(forms.ModelForm):
@@ -29,12 +28,6 @@ NEUTERED_CHOICES=(
     ('N', 'No'),
     ('N/A', 'Prefer not to say'),)
 
-TYPES=(
-       (AnimalType.objects.get(type ='cat'), 'cat'),
-       (AnimalType.objects.get(type ='dog'), 'dog'),
-       (AnimalType.objects.get(type = 'bunny'), 'bunny'),
-       )
-    
 
 class AnimalForm(forms.ModelForm):
    
@@ -70,6 +63,26 @@ class AnimalForm(forms.ModelForm):
         return cleaned_data
     
     
+    
+regs = Region.objects.all().values_list('name')
+regions = [(r[0], r[0]) for r in regs]
+
+    
+    
+class OpregForm(forms.ModelForm):
+    
+    region = forms.MultipleChoiceField(choices=regions)
+    
+    class Meta:
+        model = SitterOperatesInRegion
+        exclude = ('sitter',)
+        
+    def clean(self):
+        cleaned_data=self.cleaned_data
+        r = Region.objects.all().get(name=cleaned_data['region'][0])
+        cleaned_data['region']=r
+        
+        return cleaned_data
     
   
         

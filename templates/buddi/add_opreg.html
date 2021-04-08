@@ -1,0 +1,24 @@
+{% extends 'buddi/base.html' %}
+{% load static %}
+
+{% block title_block %}
+Add an operating region
+{% endblock %}
+
+{% block body_block %}
+    <h1>Add an operating region</h1>
+    <div>
+        <form id="opreg_form" method="post" action="{% url 'buddi:add_opreg' user %}">
+		{% csrf_token %}
+		    {% for hidden in form.hidden_fields %}
+				{{ hidden }}</br>
+			{% endfor %}
+			{% for field in form.visible_fields %}
+				{{ field.errors }}
+				{{ field.help_text }}
+				{{ field }}</br>
+			{% endfor %}
+			<input type="submit" name="submit" value="Create Operating Region" />
+        </form>
+	</div>
+{% endblock %}		
