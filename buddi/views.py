@@ -113,7 +113,7 @@ def delete_opregion(request, sitteropreg_id):
 
 @login_required
 def add_pet(request, username):
-    context_dict = {'regions':get_parent_regions()}
+    context_dict = {'regions': get_parent_regions()}
     user = User.objects.all().get(username=username)
     userprofile = UserProfile.objects.all().get(user=user)
     form = AnimalForm()
@@ -204,3 +204,7 @@ def find_sitter(request):
                     }
 
     return render(request, 'buddi/sitter_profile.html', context=context_dict)
+
+
+def sit(request, param):
+    return HttpResponse(str(param.split('/')))
