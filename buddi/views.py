@@ -207,15 +207,26 @@ def find_sitter(request):
 
 
 def sit(request, param):
-    return HttpResponse(param)
+    sitter_list = []
+    context_dict = {'regions': get_parent_regions()}
+
+    region = Region.objects.get(name__iexact=param)
+    print(region)
+
+    owners = UserProfile.objects.filter(region=region)
+    ad_list = Ad.objects.filter(user__in=owners)
+
+    context_dict['ads'] = ad_list
+    context_dict['sitters'] = sitter_list
+
+    return render(request, 'buddi/search.html', context=context_dict)
 
 
 def sitters(request, param):
     print(param)
     ad_list = []
-    sitter_list = []
     context_dict = {'regions': get_parent_regions()}
-    region = Region.objects.get(name=param)
+    region = Region.objects.get(name__iexact=param)
     print(region)
     sitter_ids = SitterOperatesInRegion.objects.all().filter(region=region).values('sitter_id')
     sitter_id_list = [s['sitter_id'] for s in sitter_ids]
@@ -231,9 +242,9 @@ def search(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             if form.cleaned_data['type'] == "sit":
-                return redirect('/sit/{0}'.format(form.cleaned_data['region'].capitalize()))
+                return redirect('/sit/{0}'.format(form.cleaned_data['region'].lower()))
             elif form.cleaned_data['type'] == "sitter":
-                return redirect('/sitters/{0}'.format(form.cleaned_data['region'].capitalize()))
+                return redirect('/sitters/{0}'.format(form.cleaned_data['region'].lower()))
         else:
             return HttpResponse("form invalid")
     else:
