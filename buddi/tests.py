@@ -1,9 +1,9 @@
 from django.apps import apps
 from django.test import TestCase
-
 from blog.apps import BlogConfig
 from buddi.apps import BuddiConfig
-from .models import *
+from blog.models import *
+from .views import *
 
 
 # Create your tests here.
@@ -99,6 +99,67 @@ class pop_buddi_script_test(TestCase):
         self.check_animal_data(5, 'Dog', 'cat', "Thinks he can bark. He can't.",
                                4, 'M', 'Y',
                                False, 0, True)
+
+
+
+class populateBlog_test(TestCase):
+    def setUp(self):
+        import populate_blog
+        populate_blog.populate()
+
+    def check_topic(self, listNews, listVet, listShop):
+        for x in range(6):
+            self.assertEqual(news.objects.get(pk=x).topic, listNews[x])
+            self.assertEqual(shop.objects.get(pk=x).topic, listShop[x])
+            self.assertEqual(vet.objects.get(pk=x).topic, listVet[x])
+
+        
+    def test_topic(self):
+        News_topic_list = []
+        for x in range(1, 6):
+            News_topic_list.append("Topic_" + str(x))
+
+        Vets_topic_list = []
+        for x in range(1, 6):
+            Vets_topic_list.append("Topic_" + str(x))
+
+        Shops_topic_list = []
+        for x in range(1, 6):
+            Shops_topic_list.append("Topic_" + str(x))
+
+        self.check_topic(News_topic_list,Vets_topic_list, Shops_topic_list)
+
+
+    def check_conntend(self, listNew, listVet, listShop):
+        for x in range(6):
+            self.assertEqual(news.objects.get(news.objects.get(pk=x).contend, open(listNew[x])))
+            self.assertEqual(news.objects.get(vet.objects.get(pk=x).contend, open(listVet[x])))
+            self.assertEqual(news.objects.get(shop.objects.get(pk=x).contend, open(listShop[x])))
+
+
+    def test_contend(self):
+        News_contend_list = []
+        for x in range(1, 6):
+            News_contend_list.append("populate_blog/News_text" + str(x) + ".txt")
+
+        Vet_contend_list = []
+        for x in range(1, 6):
+            Vet_contend_list.append("populate_blog/vet_text" + str(x) + ".txt")
+
+        Shop_contend_list = []
+        for x in range(1, 6):
+            Shop_contend_list.append("populate_blog/shop_text" + str(x) + ".txt")
+
+        self.check_conntend(News_contend_list, Vet_contend_list, Shop_contend_list)
+
+
+class testBuddiView(TestCase):
+    pass
+
+
+
+
+
 
 
 
