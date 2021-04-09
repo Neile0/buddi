@@ -5,6 +5,7 @@ from .models import UserProfile, Region, Animal, AnimalType, SitterOperatesInReg
 
 
 class SearchForm(forms.Form):
+
     regions = Region.objects.filter(is_parent_region=True)
 
     TYPE_CHOICES = (('sitter', 'For A Sitter'), ('sit', 'To Sit'),)
@@ -13,9 +14,7 @@ class SearchForm(forms.Form):
     type = forms.ChoiceField(choices=TYPE_CHOICES)
     region = forms.ChoiceField(choices=REGION_CHOICES)
 
-
-
-
+    
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -86,7 +85,7 @@ class OpregForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        # r = Region.objects.all().get(name=cleaned_data['region'][0])
+        r = Region.objects.all().get(name=cleaned_data['region'][0])
         cleaned_data['region'] = r
 
         return cleaned_data

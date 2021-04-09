@@ -232,9 +232,68 @@ def populate():
          'password': 'yeyleyhey6',
          'profile': user_profiles[5], },
     ]
+    
+    comments=[
+        {'sitter' :'tomhenry',
+         'title' : 'Very good sitter',
+         'rating': 10,
+         'by':'janejones',
+         'comment': "Took very good care of both of my pets while I was on holiday. I think they didn't even miss me!"},
+        {'sitter' :'tomhenry',
+         'title' : 'Pet was happy',
+         'rating': 8,
+         'by':'pamelared',
+         'comment':'Looked after Polly for the weekend and taking care of her is not easy, but he did well.'},
+        {'sitter' :'tomhenry',
+         'title' : 'Very satisfied',
+         'rating': 9,
+         'by':'laurengrey',
+         'comment':'My cat has never got along with a sitter so well!'},
+        {'sitter' :'pamelared',
+         'title' : 'Not the best, not the worst',
+         'rating': 5,
+         'by':'calebcaleb',
+         'comment': 'A careful sitter, but not suited for looking after large dogs such as mine'},
+        {'sitter' :'pamelared',
+         'title' : 'Good',
+         'rating': 7,
+         'by':'alexbrown',
+         'comment':'I am always happy to leave my fish in her care.'},
+        {'sitter' :'calebcaleb',
+         'title' : 'One of the best!',
+         'rating': 9,
+         'by':'janejones',
+         'comment':'Mindy and Bob would love to see him again!',},
+        {'sitter' :'calebcaleb',
+         'title' : 'Not great',
+         'rating': 4,
+         'by':'pamelared',
+         'comment':'He does not know how to take care of a parrot...'},
+        {'sitter' :'calebcaleb',
+         'title' : 'Did a good job',
+         'rating': 8,
+         'by':'tomhenry',
+         'comment':'I can always trust him to take very good care of my pets.'},
+        {'sitter' :'calebcaleb',
+         'title' : 'Not my favourite',
+         'rating':5,
+         'by':'alexbrown',
+         'comment':'The fish like him, but Poppy seems to disagree.'},
+        {'sitter' :'tomhenry',
+         'title' : 'Good enough',
+         'rating': 6,
+         'by':'alexbrown',
+         'comment':'Would hire him again, but not my first choice.'
+         },
+         {'sitter' :'pamelared',
+          'title' : 'Really good',
+         'rating': 10,
+         'by':'tomhenry',
+         'comment':'Very good with my pets. Hoppy loves her, Fred and Dog do so too.'},
+        ]
 
     rates = {'tomhenry': 34.5, 'pamelared':45, 'calebcaleb':50}
-
+    
     for rg in regions:
         add_region(rg['name'], rg['sub'])
 
@@ -256,7 +315,15 @@ def populate():
 
     for pet in Animal.objects.all():
         add_ad(pet.user, pet, pet.type)
-
+        
+    for com in comments:
+        user = User.objects.all().get(username=com['sitter'])
+        userprofile = UserProfile.objects.all().get(user=user)
+        sitter=Sitter.objects.all().get(user=userprofile)
+        maker = User.objects.all().get(username=com['by'])
+        makerprofile = UserProfile.objects.all().get(user=maker)
+        add_comment(sitter, com['title'], com['rating'], makerprofile, com['comment'])
+ 
 
 def add_region(name, sub=None):
     try:
@@ -324,6 +391,11 @@ def add_ad(userprofile, animal, type):
     ad.save()
     return ad
 
+def add_comment(sitter, title, rating, made_by, comment):
+    c = Comments.objects.get_or_create(sitter=sitter, title=title, rating=rating,
+                                       made_by=made_by, comment=comment)[0]
+    c.save()
+    return c
 
 # Start execution here!
 
