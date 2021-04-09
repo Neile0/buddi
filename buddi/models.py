@@ -105,7 +105,7 @@ class Animal(models.Model):
 class AnimalImages(models.Model):
     def image_directory_path(self, name):
         # file will be uploaded to MEDIA_ROOT/<animal>/<image-name>
-        return '{0}/{1}'.format(self.user.animal.image_dir, name)
+        return '{0}/{1}'.format(self.animal, name)
 
     DIR = "animal_images/"
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
@@ -115,7 +115,7 @@ class AnimalImages(models.Model):
         verbose_name = "Animal Images"
 
     def __str__(self):
-        return self.DIR + self.animal.image_dir + self.image
+        return self.DIR + self.animal.name + self.animal.image_dir
 
 
 class Sitter(models.Model):
