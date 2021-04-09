@@ -11,7 +11,7 @@ class SearchForm(forms.Form):
     REGION_CHOICES = ([(r.name.lower(), r.name) for r in regions])
 
     type = forms.ChoiceField(choices=TYPE_CHOICES)
-    region = forms.ChoiceField(choices=(REGION_CHOICES))
+    region = forms.ChoiceField(choices=REGION_CHOICES)
 
 
 

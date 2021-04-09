@@ -34,7 +34,7 @@ def populate():
 
     ]
 
-    types = ['cat', 'dog', 'bunny', 'parrot', 'fish',]
+    types = ['Cat', 'Dog', 'Bunny', 'Parrot', 'Fish',]
 
     animals_1 = [
         {'name': 'Mindy',
