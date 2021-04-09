@@ -9,7 +9,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('search/', views.search, name="search"),
     path('login/', views.user_login, name='login'),
-    path('login-ajax/', views.login_ajax, name='login_ajax'),
     path('logout/', views.user_logout, name='logout'),
     path('sitter/<username>/', views.sitter, name="sitter"),
     path('delete/<animal_id>/', views.delete_animal, name="delete_animal"),

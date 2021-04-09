@@ -32,9 +32,9 @@ Login
                             <form id="login-form" method="post" action="{% url 'buddi:login' %}" onsubmit="return loginCheck">
                                 {% csrf_token %}
 
-                                <input class="mb-4 input-group form-control" type="text" name="username"
+                                <input class="mb-4 input-group form-control" type="text" name="username" id="login-username"
                                        placeholder="Username"/>
-                                <input class="mb-4 form-control" type="password" name="password" placeholder="*******"/>
+                                <input class="mb-4 form-control" type="password" name="password" id="login-password" placeholder="*******"/>
                                 <input class="btn mb-4 btn-primary no-border-radius" type="submit" value="Login"/>
                             </form>
                             <a>Forgotten password?</a>

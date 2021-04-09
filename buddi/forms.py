@@ -14,7 +14,18 @@ class SearchForm(forms.Form):
     type = forms.ChoiceField(choices=TYPE_CHOICES)
     region = forms.ChoiceField(choices=REGION_CHOICES)
 
-    
+class UserLoginForm(forms.Form):
+    username = forms.CharField(max_length=25)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+
+        fields = [
+            'username',
+            'password',
+        ]
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 

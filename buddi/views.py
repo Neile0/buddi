@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .forms import UserForm, UserProfileForm, AnimalForm, OpregForm, SearchForm
+from .forms import UserForm, UserProfileForm, AnimalForm, OpregForm, SearchForm, UserLoginForm
 from .models import *
 
 def get_parent_regions():
@@ -63,7 +63,6 @@ def user_login(request):
             return HttpResponse("Invalid login.")
     else:
         return render(request, 'buddi/login.html')
-
 
 def user_profile(request, username):
     context_dict = {'regions': get_parent_regions()}
@@ -291,16 +290,3 @@ def search(request):
 
 def change_user_image(request, username):
     return HttpResponse("Changing")
-
-def login_ajax(request):
-    if request.method == 'POST':
-        login_form = AuthenticationForm(request, request.POST)
-        response_data = {}
-        if login_form.is_valid():
-            response_data['result'] = 'Success!'
-            response_data['message'] = 'You"re logged in'
-        else:
-            response_data['result'] = 'failed'
-            response_data['message'] = 'You messed up'
-
-        return HttpResponse(json.dumps(response_data), content_type="application/json")
