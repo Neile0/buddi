@@ -68,12 +68,12 @@ def user_login(request):
 
 def user_profile(request, username):
     context_dict = {'regions': get_parent_regions()}
-    user = User.objects.all().get(username=username)
-    userprofile = UserProfile.objects.all().get(user=user)
+    user_target = User.objects.all().get(username=username)
+    userprofile = UserProfile.objects.all().get(user=user_target)
     animals = Animal.objects.all().filter(user=userprofile)
 
-    context_dict['current_user'] = user
-    context_dict['userprofile'] = userprofile
+    context_dict['user_target'] = user_target
+    context_dict['user_profile'] = userprofile
     context_dict['pets'] = animals
 
     return render(request, 'buddi/user_profile.html', context=context_dict)
@@ -265,3 +265,7 @@ def search(request):
             return HttpResponse("form invalid")
     else:
         return HttpResponse("not working")
+
+
+def change_user_image(request, username):
+    return HttpResponse("Changing")

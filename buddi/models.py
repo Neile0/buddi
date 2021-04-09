@@ -32,6 +32,7 @@ class Region(models.Model):
 
 
 class UserProfile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     NAME_MAX_LENGTH = 128
@@ -43,12 +44,17 @@ class UserProfile(models.Model):
     # middle_names = models.CharField(max_length=NAME_MAX_LENGTH, default="")
     # surname = models.CharField(max_length=NAME_MAX_LENGTH)
     bio = models.CharField(max_length=BIO_MAX_LENGTH)
-    profile_image = models.ImageField(upload_to='profile_images', blank=True,
-                                      default="profile_images/profile_image_placeholder.jpg")
+
+    def profile_image_upload(self):
+        return 'profile_images/{}'.format(self.user.username)
+
+    profile_image = models.ImageField(upload_to=profile_image_upload, blank=True,
+                                      default="profile_images/profile_image_placeholder.png")
     profile_url = models.URLField(blank=True, unique=True)
     contact_no = models.CharField(max_length=PHONE_NUMBER_LENGTH)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     is_sitter = models.BooleanField(default=False)
+
 
     def __str__(self):
         return "(" + self.user.first_name + self.user.last_name + ", " + self.profile_url + ")"

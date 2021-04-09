@@ -93,3 +93,15 @@ min-width: 500px ;}
 .login-card{
     max-width: 1000px;
 }
+
+.card-inline{
+    display: inline-block;
+}
+
+.user-image{
+    width: 168px;
+}
+
+.user-lookingfor{
+    min-height: 300px;
+}

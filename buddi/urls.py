@@ -21,6 +21,7 @@ urlpatterns = [
     path('<username>/', views.user_profile, name="user"),
     path('<username>/add-buddi/', views.add_pet, name="add_pet"),
     path('<username>/where-to-operate', views.add_opreg, name="add_opreg"),
+    path('<username>/change-profile-image', views.change_user_image, name="change_user_image"),
     # path('sit/<str:param>', views.sit),
     # url(r'^sit/(?P<path>[a-zA-Z\/]*)/$', views.sit),
 ]

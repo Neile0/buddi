@@ -2,74 +2,176 @@
 {% load static %}
 
 {% block title_block %}
-{{current_user.username }}
+{{user_target.username }}
 {% endblock %}
 
 {% block body_block %}
-    <div>
-	<!-- current_user is actually the one whose page we are trying to view, not the user using buddi, I am sorry -->
-	    {% if user == current_user and user.is_authenticated %}
-	         <h2>My Profile</h2>
-			 <a href="{% url 'buddi:logout' %}">Logout</a>
-	    {% else %}
-	        <h2>Owner Profile - {{current_user.username }}</h2> 
-		{% endif %}
-		
-	</div>
-	<div>
-	    <strong>Name: </strong>{{ current_user.first_name }} {{ current_user.last_name}} </br>
-		<strong>Location: </strong>{{ userprofile.region }} </br>
-		<strong>Rating: </strong> </br>
-	</div>
-	<div>
-	    {% if user.is_authenticated %}
-		    {% if user != current_user %}
-			    <strong>Rate this owner: </strong> </br>
-			{% endif %}
-			{% if userprofile.is_sitter %}
-			<a href="{% url 'buddi:sitter' current_user.username %}">I am also a sitter. Click here to see my profile!</a>
-			{% endif %}
-		{% endif %}
-	</div>
-	<div>
-        {% if user.is_authenticated and user == current_user %}
-	        <h2>My Posts</h2>
-	    {% else %}
-	        <h2>Owner's Listings</h2>
-		{% endif %}
-	</div>
-	<div>
-	{% if pets %}
-        <ul>
-	    {% for pet in pets %}
-		    {% if pet.is_displayed == True or user == current_user %}
-		    <li>
-			    <strong>Name: </strong>{{ pet.name }} </br>
-				<strong>Type: </strong>{{ pet.type }} </br>
-				<strong>Age: </strong>{{ pet.age }} </br>
-				<strong>Gender: </strong>{{ pet.sex }} </br>
-				<strong>Pet is neutered: </strong> {{ pet.is_neutered }} </br>
-				<strong>Exercise needed? </strong> {{ pet.requires_exercise }} </br>
-				{% if pet.requires_exercise == True %}
-				    <strong>Exercise requiremenets: </strong> {{ pet.exercise_requirement }} hours per day </br>
-				{% endif %}
-				<!--strong>Date: </strong>{{ pet.date }}-->
-				{% if pet.bio != '' %}
-				    <strong>Additional information: </strong>{{ pet.bio }} </br>
-				{% endif %}
-				{% if user.is_authenticated and user == current_user %}
-				    <a href="{% url 'buddi:delete_animal' pet.id %}"> Delete {{ pet.name }}</a>
-				{% endif %}
-			</li>
-			{% endif %}
-		{% endfor %}
-		</ul>
-	{% else %}
-	    No pets to display.
-	{% endif %}
-	</div>
-	<div>
-	{% if user.is_authenticated and user == current_user %}
-	    <a href="{% url 'buddi:add_pet' user %}"><strong>Add a pet</strong></a>
-	{% endif %}
-{% endblock %}
+<div class="container-fluid bg-custom-grey">
+    <div class="container col-8 bg-white">
+        <div class="row text-center align-items-center p-3">
+
+            <div>
+                <img src="{{ MEDIA_URL }}{{ user_profile.profile_image }}"
+                     alt="{{ user_profile.username }}'s profile image" class="user-image">
+            </div>
+
+
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{ MEDIA_URL }}{{ user_profile.profile_image }}"
+                                 alt="{{ user_profile.username }}'s profile image">
+                        </div>
+                        <div class="modal-footer">
+                            {% if user == user_target and user.is_authenticated %}
+
+                            <form action="">
+                                <label for="image_upload">Change Profile Image:</label>
+                                <input type="file" name="image_upload" id="id_image_upload">
+                            </form>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            {% endif %}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="display-5">{{ user_target.first_name }} {{ user_target.last_name}} </h2>
+            <p class="user-bio">{{ user_target.bio }}</p>
+        </div>
+        <div class="container user-lookingfor">
+            <div class="row mb-3">
+                <h2>Looking for a Buddi. for</h2>
+            </div>
+            <p>Currently no listings</p>
+
+            <!--        Card    -->
+        </div>
+        <div class="container user-buddis justify-content-around">
+            <div class="row mb-3">
+                <h2>{{ user_target.first_name }} {{ user_target.last_name}}'s Buddis.</h2>
+            </div>
+            {% for pet in pets %}
+            {% if pet.is_displayed == True or user == user_target %}
+            <div class="card card-inline" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pet.name }}</h5>
+                    <h6 class="card-subtitle">{{ pet.type }}</h6>
+                    <p class="card-text">{{pet.bio}}</p>
+                    <a href="#" class="btn btn-primary">More</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% for pet in pets %}
+        {% if pet.is_displayed == True or user == user_target %}
+        <li>
+            <strong>Name: </strong>{{ pet.name }} </br>
+            <strong>Type: </strong>{{ pet.type }} </br>
+            <strong>Age: </strong>{{ pet.age }} </br>
+            <strong>Gender: </strong>{{ pet.sex }} </br>
+            <strong>Pet is neutered: </strong> {{ pet.is_neutered }} </br>
+            <strong>Exercise needed? </strong> {{ pet.requires_exercise }} </br>
+            {% if pet.requires_exercise == True %}
+            <strong>Exercise requiremenets: </strong> {{ pet.exercise_requirement }} hours per day </br>
+            {% endif %}
+            <!--strong>Date: </strong>{{ pet.date }}-->
+            {% if pet.bio != '' %}
+            <strong>Additional information: </strong>{{ pet.bio }} </br>
+            {% endif %}
+            {% if user.is_authenticated and user == user_target %}
+            <a href="{% url 'buddi:delete_animal' pet.id %}"> Delete {{ pet.name }}</a>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% endfor %}
+
+
+    </div>
+
+</div>
+</div>
+
+
+<!-- user_target is actually the one whose page we are trying to view, not the user using buddi, I am sorry -->
+{% if user == user_target and user.is_authenticated %}
+
+<h2>My Profile</h2>
+<a href="{% url 'buddi:logout' %}">Logout</a>
+{% else %}
+<h2>Owner Profile - {{user_target.username }}</h2>
+{% endif %}
+
+</div>
+
+
+<div>
+    <strong>Name: </strong>{{ user_target.first_name }} {{ user_target.last_name}} </br>
+    <strong>Location: </strong>{{ user_profile.region }} </br>
+    <strong>Rating: </strong> </br>
+</div>
+<div>
+    {% if user.is_authenticated %}
+    {% if user != user_target %}
+    <strong>Rate this owner: </strong> </br>
+    {% endif %}
+    {% if user_profile.is_sitter %}
+    <a href="{% url 'buddi:sitter' user_target.username %}">I am also a sitter. Click here to see my profile!</a>
+    {% endif %}
+    {% endif %}
+</div>
+<div>
+    {% if user.is_authenticated and user == user_target %}
+    <h2>My Posts</h2>
+    {% else %}
+    <h2>Owner's Listings</h2>
+    {% endif %}
+</div>
+<div>
+    {% if pets %}
+    <ul>
+        {% for pet in pets %}
+        {% if pet.is_displayed == True or user == user_target %}
+        <li>
+            <strong>Name: </strong>{{ pet.name }} </br>
+            <strong>Type: </strong>{{ pet.type }} </br>
+            <strong>Age: </strong>{{ pet.age }} </br>
+            <strong>Gender: </strong>{{ pet.sex }} </br>
+            <strong>Pet is neutered: </strong> {{ pet.is_neutered }} </br>
+            <strong>Exercise needed? </strong> {{ pet.requires_exercise }} </br>
+            {% if pet.requires_exercise == True %}
+            <strong>Exercise requiremenets: </strong> {{ pet.exercise_requirement }} hours per day </br>
+            {% endif %}
+            <!--strong>Date: </strong>{{ pet.date }}-->
+            {% if pet.bio != '' %}
+            <strong>Additional information: </strong>{{ pet.bio }} </br>
+            {% endif %}
+            {% if user.is_authenticated and user == user_target %}
+            <a href="{% url 'buddi:delete_animal' pet.id %}"> Delete {{ pet.name }}</a>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+    No pets to display.
+    {% endif %}
+</div>
+<div>
+    {% if user.is_authenticated and user == user_target %}
+    <a href="{% url 'buddi:add_pet' user %}"><strong>Add a pet</strong></a>
+    {% endif %}
+    {% endblock %}
