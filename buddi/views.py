@@ -196,14 +196,30 @@ def register(request):
                            'registered': registered})
 
 
-def find_sitter(request):
+def sitter(request, username):
+    user = User.objects.all().get(username=username)
+    userprofile = UserProfile.objects.all().get(user=user)
+    sitter = Sitter.objects.get(user=userprofile)
+    try:
+        comments = Comments.objects.get(sitter=sitter)
+    except:
+        comments = []
+    try:
+        sitter_regions = SitterOperatesInRegion(sitter=sitter)
+    except:
+        sitter_regions = []
+
     context_dict = {'regions': get_parent_regions(),
-                    'sitterM': Sitter.objects.all(),
-                    'sitterR': SitterOperatesInRegion.objects.all(),
-                    'comment': Comments.objects.all(),
+                    'sitter': sitter,
+                    'sitter_comments': comments,
+                    'sitter_regions': sitter_regions,
                     }
 
     return render(request, 'buddi/sitter_profile.html', context=context_dict)
+
+
+def find_sitter(request):
+    return HttpResponse("Replace view with sitter()")
 
 
 def sit(request, param):

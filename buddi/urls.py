@@ -10,7 +10,8 @@ urlpatterns = [
     path('search/', views.search, name="search"),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
-    path('sitter/<username>/', views.sitter_profile, name="sitter_profile"),
+
+    path('sitter/<username>/', views.sitter, name="sitter"),
     path('delete/<animal_id>/', views.delete_animal, name="delete_animal"),
     path('delete/<sitteropreg_id>', views.delete_opregion, name="delete_opregion"),
     path('become-a-buddi/', views.register, name='register'),
