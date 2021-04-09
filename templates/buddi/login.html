@@ -37,6 +37,9 @@ Login
                             <p>Dont have an account</p>
                             <a href="{% url 'buddi:register' %}">Register here</a>
                         </div>
+                        <div id="detail">
+                        <button type="button" onclick="loadDoc()">Click here to see more security</button>
+                    </div>
                     </div>
 
                 </div>
@@ -58,4 +61,18 @@ Login
     <input type="submit" value="submit"/>
 </form>
 {% endblock %}
-	
+
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("detail").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
+</script>
