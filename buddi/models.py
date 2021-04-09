@@ -2,9 +2,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 
-#NOTE: all on_deletes are set to CASCADE. This would be changed in a realistic deployment
-# Written by Aidan
 
+# NOTE: all on_deletes are set to CASCADE. This would be changed in a realistic deployment
+
+
+# A custom model that ensures an integer is between min and max values
 class IntegerRangeField(models.IntegerField):
     def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
         self.min_value, self.max_value = min_value, max_value
@@ -16,6 +18,7 @@ class IntegerRangeField(models.IntegerField):
         return super(IntegerRangeField, self).formfield(**defaults)
 
 
+# Written by Aidan
 class Region(models.Model):
     REGION_LENGTH = 120
     name = models.CharField(max_length=REGION_LENGTH, unique=True, primary_key=True)
@@ -31,8 +34,8 @@ class Region(models.Model):
         return self.name
 
 
+# Written by Aidan
 class UserProfile(models.Model):
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     NAME_MAX_LENGTH = 128
@@ -55,11 +58,11 @@ class UserProfile(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     is_sitter = models.BooleanField(default=False)
 
-
     def __str__(self):
         return "(" + self.user.first_name + self.user.last_name + ", " + self.profile_url + ")"
 
 
+# Written by Aidan
 class AnimalType(models.Model):
     type = models.CharField(max_length=128, primary_key=True)
 
@@ -67,6 +70,7 @@ class AnimalType(models.Model):
         return self.type
 
 
+# Written by Aidan
 class Animal(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
@@ -102,6 +106,7 @@ class Animal(models.Model):
         return "(" + self.name + "," + self.user.user.username + ")"
 
 
+# Written by Aidan
 class AnimalImages(models.Model):
     def image_directory_path(self, name):
         # file will be uploaded to MEDIA_ROOT/<animal>/<image-name>
@@ -118,6 +123,7 @@ class AnimalImages(models.Model):
         return self.DIR + self.animal.name + self.animal.image_dir
 
 
+# Written by Aidan
 class Sitter(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     hourly_rate = models.DecimalField(max_digits=4, decimal_places=1)
@@ -126,6 +132,7 @@ class Sitter(models.Model):
         return self.user.user.username
 
 
+# Written by Aidan
 class SitterOperatesInRegion(models.Model):
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
@@ -137,6 +144,7 @@ class SitterOperatesInRegion(models.Model):
         return (self.sitter.user.user.username + " in " + self.region.name)
 
 
+# Written by Aidan
 class Comments(models.Model):
     MAX_COMMENT_LENGTH = 400
     MAX_COMMENT_SUBJECT = 120
@@ -150,6 +158,7 @@ class Comments(models.Model):
         verbose_name = "Comments"
 
 
+# Written by Aidan
 class Ad(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
