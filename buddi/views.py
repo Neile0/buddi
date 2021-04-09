@@ -37,6 +37,7 @@ def search_test(request, case, place):
     if case == 'sit':
         owners = UserProfile.objects.filter(region=region)
         ad_list = Ad.objects.filter(user__in=owners)
+        
 
     context_dict['ads'] = ad_list
     context_dict['sitters'] = sitter_list
@@ -243,9 +244,12 @@ def sit(request, param):
     owners = UserProfile.objects.filter(region=region)
     ad_list = Ad.objects.filter(user__in=owners)
     images = []
-    for ad in ad_list:
-        image = AnimalImages.objects.all().get(animal=ad.animal)[0]
-        images.append(image)
+    #for ad in ad_list:
+        #image = AnimalImages.objects.all().get(animal=ad.animal)[0]
+        #images.append(image)
+    ad_animals = ad_list.values('animal')
+    images = AnimalImages.objects.filter(animal__in=ad_animals)
+    print(ad_animals)
 
     context_dict['ads'] = ad_list
     context_dict['ad_image'] = images

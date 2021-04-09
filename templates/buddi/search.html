@@ -16,13 +16,12 @@
             {% if user != ad.user.user %}
             <div class="card flex-row flex-wrap">
                 <div class="card-header border-0">
-                    <img src="{{MEDIA_URL}}{{img}}"
-                         alt="Animal {{ad.animal.name}} belonging to {{ad.user.user.username">
+                    <img src="/media/({{ad.animal.name}},{{ad.user.user.username}})/{{ad.animal.name}}.jpg"
+                         alt="Animal {{ad.animal.name}} belonging to {{ad.user.user.username}}">
                 </div>
                 <div class="card-block px-2">
                     <h4 class="card-title">{{ ad.animal.name}}<a class="text-muted"
-                                                                 href="{%url 'buddi:user' ad.user.user.username %}">{{
-                        ad.user.user.username</a></h4>
+                                                                 href="{%url 'buddi:user' ad.user.user.username %}"> {{ad.user.user.username}}</a></h4>
                     <p class="card-text">{{ad}}</p>
                     <a href="#" class="btn btn-primary">Get In Touch With Owner</a>
                     <a href="{%url 'buddi:user' ad.user.user.username %}" class="btn btn-secondary">View Animal</a>
