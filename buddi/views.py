@@ -189,7 +189,7 @@ def register(request):
 
     return render(request,
                   'buddi/register.html',  # might need to change this to sign up?
-                  context={'user_form': user_form,
+                  context={'regions': get_parent_regions(), 'user_form': user_form,
                            'profile_form': profile_form,
                            'registered': registered})
 
