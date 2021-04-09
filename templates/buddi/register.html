@@ -12,8 +12,8 @@ Register
             <div class="card login-reg-card">
                 <div class="row">
                     <div class="col-md-5">
-                        <img src="{% static 'images" alt="..." class="login-reg-card-image"/>
-                    </div>
+                        <img style="height: 100%; width: 100%; object-fit: cover;" src="{% static 'images/walker_hero.jpg' %}" alt="Image of a woman walking multiple dogs" class="register"/>
+                     </div>
                     <div class="col-md-7">
                         <div class="card-body">
                             <div class="brand-wrapper">
@@ -51,21 +51,3 @@ Register
     </div>
 </div>
 {% endblock %}
-
-
-<h1>Please fill up the following blanks to complete the register</h1>
-{% if registered %}
-Rango says: <strong>thank you for registering!</strong>
-<a href="{% url 'buddi:index:index' %}">Return to the homepage.</a><br/>
-{% else %}
-Rango says: <strong>register here!</strong><br/>
-<form id="user_form" method="post" action="{% url 'buddi:register' %}"
-      enctype="multipart/form-data">
-    {% csrf_token %}
-    <!-- Display each form -->
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <!-- Provide a button to click to submit the form. -->
-    <input type="submit" name="submit" value="Register"/>
-</form>
-{% endif %}
