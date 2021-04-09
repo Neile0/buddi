@@ -30,7 +30,7 @@ SECRET_KEY = 'ipaxt!%w=0jrz*daiw!w=x!kg*7_)545^)dq)2h8d+r7o*ml!l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['buddi.pythonanywhere.com']
 
 # Application definition
 
