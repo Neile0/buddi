@@ -1,0 +1,16 @@
+{# Written by Aidan #}
+{% load static %}
+
+<nav class="navbar navbar-default bg-primary-lighter">
+    <div class="container-fluid p-2">
+        <div class="navbar-header">
+            <a class="fw-bold navbar-brand" href="{% url 'blog:index' %}">Buddi.BLOG</a>
+        </div>
+        <div class="nav navbar-right">
+            <ul class="nav navbar-nav nav-ul">
+                <li><a class="p-3" href="{% url 'buddi:index'%}">Back to Buddi.</a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
