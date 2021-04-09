@@ -234,7 +234,7 @@ def populate():
     ]
 
     rates = {'tomhenry': 34.5, 'pamelared':45, 'calebcaleb':50}
-
+    
     for rg in regions:
         add_region(rg['name'], rg['sub'])
 
@@ -256,7 +256,7 @@ def populate():
 
     for pet in Animal.objects.all():
         add_ad(pet.user, pet, pet.type)
-
+ 
 
 def add_region(name, sub=None):
     try:
@@ -323,7 +323,6 @@ def add_ad(userprofile, animal, type):
     ad = Ad.objects.get_or_create(user=userprofile, animal=animal, type=type)[0]
     ad.save()
     return ad
-
 
 # Start execution here!
 
