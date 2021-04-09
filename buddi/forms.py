@@ -5,19 +5,19 @@ from .models import UserProfile, Region, Animal, AnimalType, SitterOperatesInReg
 
 
 class SearchForm(forms.Form):
-    # regions = Region.objects.filter(is_parent_region=True)
+    regions = Region.objects.filter(is_parent_region=True)
 
     TYPE_CHOICES = (('sitter', 'For A Sitter'), ('sit', 'To Sit'),)
-    # REGION_CHOICES = ([(r.name.lower(), r.name) for r in regions])
+    REGION_CHOICES = ([(r.name.lower(), r.name) for r in regions])
 
     type = forms.ChoiceField(choices=TYPE_CHOICES)
-    # region = forms.ChoiceField(choices=REGION_CHOICES)
+    region = forms.ChoiceField(choices=REGION_CHOICES)
 
 
 class OpregForm(forms.ModelForm):
-    # regs = Region.objects.all().values_list('name')
-    # regions = [(r[0], r[0]) for r in regs]
-    # region = forms.MultipleChoiceField(choices=regions)
+    regs = Region.objects.all().values_list('name')
+    regions = [(r[0], r[0]) for r in regs]
+    region = forms.MultipleChoiceField(choices=regions)
 
     class Meta:
         model = SitterOperatesInRegion
@@ -25,7 +25,7 @@ class OpregForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        # r = Region.objects.all().get(name=cleaned_data['region'][0])
+        r = Region.objects.all().get(name=cleaned_data['region'][0])
         cleaned_data['region'] = r
 
         return cleaned_data
