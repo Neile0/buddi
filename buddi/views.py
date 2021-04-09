@@ -69,11 +69,11 @@ def user_login(request):
 def user_profile(request, username):
     context_dict = {'regions': get_parent_regions()}
     user_target = User.objects.all().get(username=username)
-    userprofile = UserProfile.objects.all().get(user=user_target)
-    animals = Animal.objects.all().filter(user=userprofile)
+    user_profile = UserProfile.objects.all().get(user=user_target)
+    animals = Animal.objects.all().filter(user=user_profile)
 
     context_dict['user_target'] = user_target
-    context_dict['user_profile'] = userprofile
+    context_dict['user_profile'] = user_profile
     context_dict['pets'] = animals
 
     return render(request, 'buddi/user_profile.html', context=context_dict)
@@ -197,23 +197,36 @@ def register(request):
 
 
 def sitter(request, username):
-    user = User.objects.all().get(username=username)
-    userprofile = UserProfile.objects.all().get(user=user)
-    sitter = Sitter.objects.get(user=userprofile)
+    context_dict = {'regions': get_parent_regions()}
+
+    user_target = User.objects.all().get(username=username)
+    user_profile = UserProfile.objects.all().get(user=user_target)
+    animals = Animal.objects.all().filter(user=user_profile)
+
+    context_dict['user_target'] = user_target
+    context_dict['user_profile'] = user_profile
+    context_dict['pets'] = animals
+
+    sitter = Sitter.objects.get(user=user_profile)
+
     try:
         comments = Comments.objects.get(sitter=sitter)
     except:
         comments = []
     try:
-        sitter_regions = SitterOperatesInRegion(sitter=sitter)
+        sitter_regions = SitterOperatesInRegion.objects.all().get(sitter=sitter)
     except:
         sitter_regions = []
 
-    context_dict = {'regions': get_parent_regions(),
-                    'sitter': sitter,
-                    'sitter_comments': comments,
-                    'sitter_regions': sitter_regions,
-                    }
+    context_dict['sitter'] = sitter
+    context_dict['sitter_regions'] = sitter_regions
+    context_dict['sitter_comments'] = comments
+
+    if comments:
+        rating = sum([c.rating for c in comments])
+    else:
+        rating = 0
+    context_dict['sitter_rating'] = rating
 
     return render(request, 'buddi/sitter_profile.html', context=context_dict)
 

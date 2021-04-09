@@ -48,7 +48,13 @@
 
 
             <h2 class="display-5">{{ user_target.first_name }} {{ user_target.last_name}} </h2>
+
+            {% if user_profile.is_sitter %}
+            <p><a href="{% url 'buddi:sitter' user_target.username %}">I am also a sitter. Click here to see my profile!</a></p>
+            {% endif %}
+            {% if user_target.bio %}
             <p class="user-bio">{{ user_target.bio }}</p>
+            {% endif %}
         </div>
         <div class="p-3 container user-lookingfor">
             <div class="row mb-3">
