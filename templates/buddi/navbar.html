@@ -15,23 +15,22 @@
                 <li><a class="p-3" href="{% url 'buddi:login' %}">Login</a></li>
                 {% endif %}
             </ul>
-            <form class="navbar-form navbar-search" method="post" action="/search/">
+            <form class="navbar-form navbar-search" method="post" action="{% url 'buddi:search' %}">
                 {% csrf_token %}
                 <div class="input-group input-group-s">
                     <div class="input-group-s">
                         <span class="input-group-text no-border-radius">Looking</span>
                     </div>
-                    <select class="form-control custom-select no-border-radius">
+                    <select class="form-control custom-select no-border-radius" name="type" id="id_type">
                         <option selected value="sitter">For A Sitter</option>
                         <option value="sit">To Sit</option>
                     </select>
-
                     <div class="input-group-s">
                         <span class="input-group-text no-border-radius">In</span>
                     </div>
-                    <select class="form-control custom-select no-border-radius">
+                    <select class="form-control custom-select no-border-radius" name="region" id="id_region">
                         {% for region in regions %}
-                        <option value="{{ region.name }}">{{ region.name}}</option>
+                        <option value="{{ region.name|lower }}">{{ region.name}}</option>
                         {% endfor %}
                     </select>
                     <div class="input-group-btn input-group-s">

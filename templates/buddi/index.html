@@ -9,32 +9,34 @@ Home
 {% block body_block %}
 
 
-<div class="jumbotron text-center vertical-center" id="index-hero" style="background-image: url('{% static 'images/buddi_hero.jpg'%}')">
+<div class="jumbotron text-center vertical-center" id="index-hero"
+     style="background-image: url('{% static 'images/buddi_hero.jpg'%}')">
     <div class="container">
         <h1 class="display-1 fw-bold">Buddi.</h1>
         <h2 class="display-6">Helping you find a <b>Buddi</b> to look after your <b>Buddi</b></h2>
         <div class="row" id="index-hero-input">
-            <form class="form-inline" method="post" action="/search/">
+            <form class="form-inline" method="post" action="{% url 'buddi:search' %}">
                 {% csrf_token %}
                 <div class="input-group input-group-lg">
                     <div class="input-group-lg">
                         <span class="input-group-text no-border-radius">Looking</span>
                     </div>
-                    <select class="form-control custom-select no-border-radius">
+                    <select class="form-control custom-select no-border-radius" name="type" id="id_type">
                         <option selected value="sitter">For A Sitter</option>
                         <option value="sit">To Sit</option>
                     </select>
-
                     <div class="input-group-lg">
                         <span class="input-group-text no-border-radius">In</span>
                     </div>
-                    <select class="form-control custom-select no-border-radius">
+                    <select class="form-control custom-select no-border-radius" name="region" id="id_region">
                         {% for region in regions %}
-                        <option value="{{ region.name }}">{{ region.name}}</option>
+                        <option value="{{ region.name|lower }}">{{ region.name}}</option>
                         {% endfor %}
                     </select>
                     <div class="input-group-btn input-group-lg bg-primary">
-                        <button id="btn-search" type="button" class="btn btn-primary no-border-radius">Search</button>
+                        <button id="btn-search" type="submit" name="submit" class="btn btn-primary no-border-radius">
+                            Search
+                        </button>
                     </div>
                 </div>
             </form>

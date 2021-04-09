@@ -7,10 +7,9 @@ app_name = 'buddi'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('search/<case>/<place>/', views.search, name='search'),
+    path('search/', views.search, name="search"),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
-
     path('sitter/<username>/', views.sitter_profile, name="sitter_profile"),
     path('delete/<animal_id>/', views.delete_animal, name="delete_animal"),
     path('delete/<sitteropreg_id>', views.delete_opregion, name="delete_opregion"),

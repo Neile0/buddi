@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .forms import UserForm, UserProfileForm, AnimalForm, OpregForm
+from .forms import UserForm, UserProfileForm, AnimalForm, OpregForm, SearchForm
 from .models import *
 
 
@@ -19,7 +19,7 @@ def index(request):
     return render(request, 'buddi/index.html', context=context_dict)
 
 
-def search(request, case, place):
+def search_test(request, case, place):
     # case should denote whether
     # this is a looking for a sitter/looking for a pet to sit situation
     # place should be a region/region name, the differences can be easily fixed
@@ -29,18 +29,17 @@ def search(request, case, place):
     context_dict['case'] = case
     region = Region.objects.get(name=place)
     print(region)
-        
+
     if case == 'sitter':
         sitter_ids = SitterOperatesInRegion.objects.all().filter(region=region).values('sitter_id')
         sitter_id_list = [s['sitter_id'] for s in sitter_ids]
-        sitter_list=Sitter.objects.filter(id__in=sitter_id_list)
+        sitter_list = Sitter.objects.filter(id__in=sitter_id_list)
         print(sitter_list)
 
     if case == 'sit':
         owners = UserProfile.objects.filter(region=region)
         ad_list = Ad.objects.filter(user__in=owners)
-        
-        
+
     context_dict['ads'] = ad_list
     context_dict['sitters'] = sitter_list
 
@@ -208,4 +207,34 @@ def find_sitter(request):
 
 
 def sit(request, param):
-    return HttpResponse(str(param.split('/')))
+    return HttpResponse(param)
+
+
+def sitters(request, param):
+    print(param)
+    ad_list = []
+    sitter_list = []
+    context_dict = {'regions': get_parent_regions()}
+    region = Region.objects.get(name=param)
+    print(region)
+    sitter_ids = SitterOperatesInRegion.objects.all().filter(region=region).values('sitter_id')
+    sitter_id_list = [s['sitter_id'] for s in sitter_ids]
+    sitter_list = Sitter.objects.filter(id__in=sitter_id_list)
+
+    context_dict['ads'] = ad_list
+    context_dict['sitters'] = sitter_list
+    return render(request, 'buddi/search.html', context=context_dict)
+
+
+def search(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['type'] == "sit":
+                return redirect('/sit/{0}'.format(form.cleaned_data['region'].capitalize()))
+            elif form.cleaned_data['type'] == "sitter":
+                return redirect('/sitters/{0}'.format(form.cleaned_data['region'].capitalize()))
+        else:
+            return HttpResponse("form invalid")
+    else:
+        return HttpResponse("not working")
