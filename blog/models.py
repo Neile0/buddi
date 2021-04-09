@@ -19,8 +19,8 @@ class Article(models.Model):
         return '{0}/{1}'.format(slugify(self.date_published), name)
 
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
-    sub_title = models.CharField(max_length=TITLE_MAX_LENGTH, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    sub_title = models.CharField(max_length=TITLE_MAX_LENGTH, null=True, blank=True)
+    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
     hero_image = models.ImageField(storage=fs, upload_to=upload)
     content = models.FileField(storage=fs, upload_to=upload)
     author = models.CharField(max_length=NAME_MAX_LENGTH)
