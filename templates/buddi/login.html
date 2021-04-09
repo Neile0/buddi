@@ -5,15 +5,20 @@
 Login
 {% endblock %}
 
-{% block body_block %}
+{% block additional_scripts %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
 
+{% block body_block %}
 <div class="container-fluid bg-primary-lighter">
     <div class="container d-flex align-items-center  min-vh-100 py-3 py-md-0">
         <div class="container col-8">
             <div class="card login-card">
                 <div class="row">
                     <div class="col-md-5">
-                        <img src="{% static 'images" alt="..." class="login-card-image"/>
+                        <img style="height: 100%; width: 100%; object-fit: cover;"
+                             src="{% static 'images/cat_hero.jpg' %}" alt="Image of an owner with their cat"
+                             class="login-card-image"/>
                     </div>
                     <div class="col-md-7">
                         <div class="card-body">
@@ -24,7 +29,7 @@ Login
                             <div class="card-subtitle">
                                 <p>Sign into your account</p>
                             </div>
-                            <form id="login-form" method="post" action="{% url 'buddi:login' %}">
+                            <form id="login-form" method="post" action="{% url 'buddi:login' %}" onsubmit="return loginCheck">
                                 {% csrf_token %}
 
                                 <input class="mb-4 input-group form-control" type="text" name="username"
@@ -34,28 +39,14 @@ Login
                             </form>
                             <a>Forgotten password?</a>
                             <hr>
-                            <p>Dont have an account</p>
+                            <p class="text-muted">Dont have an account</p>
                             <a href="{% url 'buddi:register' %}">Register here</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
-
-
-<h1>Login to Buddi</h1>
-<form id="login_form" method="post" action="{% url 'buddi:login' %}">
-    {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50"/>
-    <br/>
-    Password: <input type="password" name="password" value="" size="50"/>
-    <br/>
-    <input type="submit" value="submit"/>
-</form>
 {% endblock %}
-	
+

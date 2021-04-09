@@ -1,0 +1,4 @@
+Our security using hash value to store your password.
+So you don't have to afraid any accident on exploding your personal
+information only if you keep in mind that log out when you
+are not visiting this web.
