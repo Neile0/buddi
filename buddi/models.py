@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 
-
+#NOTE: all on_deletes are set to CASCADE. This would be changed in a realistic deployment
 # Written by Aidan
 
 class IntegerRangeField(models.IntegerField):
@@ -138,8 +138,13 @@ class SitterOperatesInRegion(models.Model):
 
 
 class Comments(models.Model):
+    MAX_COMMENT_LENGTH = 400
+    MAX_COMMENT_SUBJECT = 120
     sitter = models.ForeignKey(Sitter, on_delete=models.CASCADE)
+    title = models.CharField(max_length=MAX_COMMENT_SUBJECT)
     rating = IntegerRangeField(min_value=0, max_value=10)
+    made_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=MAX_COMMENT_LENGTH, default="No message")
 
     class Meta:
         verbose_name = "Comments"

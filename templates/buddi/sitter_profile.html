@@ -2,10 +2,179 @@
 {% load static %}
 
 {% block title_block %}
-Search your sitter
+Sitter {{user_target.username }}
 {% endblock %}
 
-{% block body_block%}
 {{ sitter.hourly_rate }}
 {{ sitter.user.user.username }}
+
+
+{% block body_block %}
+<div class="container-fluid bg-custom-grey">
+    <div class="container col-8 bg-white">
+        <div class="row text-center align-items-center p-3">
+
+            <div>
+                <img src="{{ MEDIA_URL }}{{ user_profile.profile_image }}"
+                     alt="{{ user_profile.username }}'s profile image" class="user-image">
+            </div>
+
+
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{ MEDIA_URL }}{{ user_profile.profile_image }}"
+                                 alt="{{ user_profile.username }}'s profile image">
+                        </div>
+                        <div class="modal-footer">
+                            {% if user == user_target and user.is_authenticated %}
+
+                            <form action="">
+                                <label for="image_upload">Change Profile Image:</label>
+                                <input type="file" name="image_upload" id="id_image_upload">
+                            </form>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            {% endif %}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="display-5">{{ user_target.first_name }} {{ user_target.last_name}} </h2>
+
+            {% if user_profile.is_sitter %}
+            <p><a href="{% url 'buddi:sitter' user_target.username %}">I am also a sitter. Click here to see my
+                profile!</a></p>
+            {% endif %}
+            {% if user_target.bio %}
+            <p class="user-bio">{{ user_target.bio }}</p>
+            {% endif %}
+        </div>
+        <div class="p-3 container sitter-details">
+            <div class="row mb-3">
+                <h2 class="mb-3">Hourly Rate: £{{ sitter.hourly_rate }}</h2>
+                <h2 class="mb-3">Rating</h2>
+                <div class="mb-3 progress">
+                    <div class="progress-bar bg-success" role="progressbar"
+                         aria-valuenow="{{ sitter_rating }}" aria-valuemin="1"
+                         aria-valuemax="10"
+                         style="width:{{ sitter_rating }}%;"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="p-3 container sitter-comments">
+            <h2 class="mb-3">Comments</h2>
+            {% if sitter_comments %}
+            {% for comment in sitter_comments %}
+            <div class="comment card w-100" >
+                <div class="card-body">
+                    <h5 class="card-title">{{ comment.title }}</h5>
+                    <h6 class="card-subtitle">{{ comment.made_by }}</h6>
+                    <p class="card-text">{{comment.comment}}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>This sitter has no comments yet</p>
+            {% endif %}
+        </div>
+        <div class="p-3 container user-buddis justify-content-around">
+            <div class="row mb-3">
+                <h2>{{ user_target.first_name }} {{ user_target.last_name}}'s Buddis. {% if user.is_authenticated and user == user_target %}
+                    <a class="btn btn-light" href="{% url 'buddi:add_pet' user %}"><strong>Add a pet</strong></a>
+                    {% endif %}</h2>
+
+            </div>
+            {% for pet in pets %}
+            {% if pet.is_displayed == True or user == user_target %}
+            <div class="card card-inline" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pet.name }}</h5>
+                    <h6 class="card-subtitle">{{ pet.type }}</h6>
+                    <p class="card-text">{{pet.bio}}</p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#animal-modal-{{ pet.name|lower }}">
+                        More
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal fade" id="animal-modal-{{ pet.name|lower }}" tabindex="-1" role="dialog"
+                 aria-labelledby="animal-model-{{ pet.name|lower }}-title" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="animal-model-{{ pet.name|lower }}-title">{{ pet.name }}</h5>
+                            <h6 class="modal-subtitle" id="animal-model-{{ pet.name|lower }}-subtitle">{{ pet.type
+                                }}</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img class="mb-4" src="{{ MEDIA_URL }}{{ pet.profile_image }}"
+                                 alt="{{ user_profile.username }}'s profile image">
+                            <h5>Age: {{ pet.age }}</h5>
+
+                            <p>{{ pet.bio}}</p>
+                            <hr>
+                            <h5>Sex: {{ pet.age }}</h5>
+                            {% if pet.is_neutered %}
+                            <h5>Is Neutered: Yes</h5>
+                            {% else %}
+                            <h5>Is Neutered: No</h5>
+                            {% endif %}
+                            {% if pet.requires_exercise %}
+                            <h5>Requires Exercise: Yes</h5>
+                            <h5>Exercise Requirement: </h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar"
+                                     aria-valuenow="{{ pet.exercise_requirement }}" aria-valuemin="1"
+                                     aria-valuemax="10"
+                                     style="width:{{ pet.exercise_requirement }}0%;"></div>
+                            </div>
+
+                            {% else %}
+                            <h5>Requires Exercise: No</h5>
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            {% if user.is_authenticated and user == user_target %}
+                            <a class="btn btn-danger" href="{% url 'buddi:add_pet' user %}">Remove</a>
+                            {% endif %}
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+
 {% endblock %}
+
+
+
+
+
+
+

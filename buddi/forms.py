@@ -72,11 +72,10 @@ class AnimalForm(forms.ModelForm):
         return cleaned_data
 
 
-regs = Region.objects.all().values_list('name')
-regions = [(r[0], r[0]) for r in regs]
-
 
 class OpregForm(forms.ModelForm):
+    regs = Region.objects.all().values_list('name')
+    regions = [(r[0], r[0]) for r in regs]
     region = forms.MultipleChoiceField(choices=regions)
 
     class Meta:
@@ -85,7 +84,7 @@ class OpregForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        r = Region.objects.all().get(name=cleaned_data['region'][0])
+        # r = Region.objects.all().get(name=cleaned_data['region'][0])
         cleaned_data['region'] = r
 
         return cleaned_data
