@@ -23,7 +23,9 @@ Sitter Profile
 		<ul>
 		{% for reg in sitter_reg %}
 		    <li><strong>{{ reg.region }}</strong>
+			{% if user == current_user and user.is_authenticated %}
 			<a href="{% url 'buddi:delete_opregion' reg.id %}">Delete {{reg.region}}</a> </li>
+			{% endif %}
 		{% endfor %}
 		</ul>
 		</br>

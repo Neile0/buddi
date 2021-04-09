@@ -7,11 +7,9 @@ from django.urls import reverse
 from .forms import UserForm, UserProfileForm, AnimalForm, OpregForm, SearchForm
 from .models import *
 
-
 def get_parent_regions():
     regions = Region.objects.filter(is_parent_region=True)
     return [r for r in regions]
-
 
 # Create your views here.
 def index(request):
