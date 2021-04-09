@@ -4,19 +4,14 @@ from django.contrib.auth.models import User
 from .models import UserProfile, Region, Animal, AnimalType, SitterOperatesInRegion
 
 
-class SearchForm(forms.ModelForm):
-    
+class SearchForm(forms.Form):
+    regions = Region.objects.filter(is_parent_region=True)
+
     TYPE_CHOICES = (('sitter', 'For A Sitter'), ('sit', 'To Sit'),)
+    REGION_CHOICES = ([(r.name.lower(), r.name) for r in regions])
 
     type = forms.ChoiceField(choices=TYPE_CHOICES)
-    try:
-        region = forms.ChoiceField(choices=[(r.name, r.name) for r in Region.objects.all()])
-    except:
-        region = forms.ChoiceField(choices=[])
-
-    class Meta:
-        model = Region
-        fields = ('name',)
+    region = forms.ChoiceField(choices=REGION_CHOICES)
 
 
 class UserForm(forms.ModelForm):

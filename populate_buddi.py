@@ -11,12 +11,30 @@ from buddi.models import *
 def populate():
     regions = [
         {'name': 'Glasgow', 'sub': None},
+        {'name': 'City-Centre', 'sub': 'Glasgow'},
+        {'name': 'West-End', 'sub': 'Glasgow'},
+        {'name': 'Southside', 'sub': 'Glasgow'},
+        {'name': 'Necropolis', 'sub': 'Glasgow'},
+        {'name': 'Trongate', 'sub': 'Southside'},
+        {'name': 'Maryhill', 'sub': 'West-End'},
+        {'name': 'Hillhead', 'sub': 'West-End'},
         {'name': 'Edinburgh', 'sub': None},
+        {'name': 'Aberdeen', 'sub': None},
+        {'name': 'Dundee', 'sub': None},
+        {'name': 'Inverness', 'sub': None},
+        {'name': 'Stirling', 'sub': None},
+        {'name': 'Dumfries', 'sub': None},
         {'name': 'London', 'sub': None},
-        {'name': 'West End', 'sub': 'Glasgow'}
+        {'name': 'Manchester', 'sub': None},
+        {'name': 'Birmingham', 'sub': None},
+        {'name': 'Bristol', 'sub': None},
+        {'name': 'Liverpool', 'sub': None},
+        {'name': 'York', 'sub': None},
+
+
     ]
 
-    types = ['cat', 'dog', 'bunny', 'parrot', 'fish',]
+    types = ['Cat', 'Dog', 'Bunny', 'Parrot', 'Fish',]
 
     animals_1 = [
         {'name': 'Mindy',
