@@ -5,6 +5,7 @@ from . import views
 
 app_name = 'buddi'
 
+# Written by Aidan
 urlpatterns = [
     path('', views.index, name='index'),
     path('search/', views.search, name="search"),
@@ -16,7 +17,9 @@ urlpatterns = [
     path('become-a-buddi/', views.register, name='register'),
     path('find-sitter/', views.find_sitter, name='find-sitter'),
     url(r'^sit/(?P<param>.+)/$', views.sit, name='sit'),
+    # reg expression such that we can have /sit/<region/<subregion>/<subregion>/... indefinitly
     url(r'^sitters/(?P<param>.+)/$', views.sitters, name='sitters'),
+    # reg expression such that we can have /sitters/<region/<subregion>/<subregion>/... indefinitly
     path('<username>/', views.user_profile, name="user"),
     path('<username>/add-buddi/', views.add_pet, name="add_pet"),
     path('<username>/where-to-operate', views.add_opreg, name="add_opreg"),
