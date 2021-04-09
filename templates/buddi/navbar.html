@@ -11,6 +11,7 @@
                 <li><a class="p-3" href="{% url 'blog:index'%}">Blog</a></li>
                 {% if user.is_authenticated %}
                 <li><a class="p-3" href="{% url 'buddi:user' user%}">My Profile</a></li>
+                <li><a class="p-3" href="{% url 'buddi:logout' %}">Logout</a></li>
                 {% else %}
                 <li><a class="p-3" href="{% url 'buddi:login' %}">Login</a></li>
                 {% endif %}
