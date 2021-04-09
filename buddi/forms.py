@@ -8,12 +8,15 @@ class SearchForm(forms.ModelForm):
     TYPE_CHOICES = (('sitter', 'For A Sitter'), ('sit', 'To Sit'),)
 
     type = forms.ChoiceField(choices=TYPE_CHOICES)
-    region = forms.ChoiceField(choices=[(r.name, r.name) for r in Region.objects.all()])
+    try:
+        region = forms.ChoiceField(choices=[(r.name, r.name) for r in Region.objects.all()])
+    except:
+        region = forms.ChoiceField(choices=[])
 
-    class Meta:
-        model = Region
-        fields = ('name',)
 
+class Meta:
+    model = Region
+    fields = ('name',)
 
 
 class UserForm(forms.ModelForm):
