@@ -5,8 +5,11 @@
 Login
 {% endblock %}
 
-{% block body_block %}
+{% block additional_scripts %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
 
+{% block body_block %}
 <div class="container-fluid bg-primary-lighter">
     <div class="container d-flex align-items-center  min-vh-100 py-3 py-md-0">
         <div class="container col-8">
@@ -26,7 +29,7 @@ Login
                             <div class="card-subtitle">
                                 <p>Sign into your account</p>
                             </div>
-                            <form id="login-form" method="post" action="{% url 'buddi:login' %}">
+                            <form id="login-form" method="post" action="{% url 'buddi:login' %}" onsubmit="return loginCheck">
                                 {% csrf_token %}
 
                                 <input class="mb-4 input-group form-control" type="text" name="username"
