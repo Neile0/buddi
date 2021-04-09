@@ -2,34 +2,72 @@
 {% load static %}
 
 {% block title_block %}
-Search page
+{{ region.name }}
 {% endblock %}
 
 {% block body_block %}
-    <h1>Search results</h1>
-    {% if ads %}
-	Ads corresponding to your search:
-	<ul>
-        {% for ad in ads %}
-		{% if user != ad.user.user %}
-            <li>
-                <a href="{%url 'buddi:user' ad.user.user.username %}">{{ ad.animal.name }}, owned by {{ ad.user.user.username }}</a>
-            </li>
-		{% endif %}
-        {% endfor %}
-	</ul>
-    {% elif sitters %}
-	    Sitters corresponding to your search:
-		<ul>
-        {% for s in sitters %}
-		{% if user != s.user.user %}
-            <li>
-                <a href="{%url 'buddi:sitter' s.user.user.username %}">Sitter {{s.user.user.username}}</a>
-            </li>
-		{% endif %}
-        {% endfor %}
-	</ul>
-    {% else %}
-	    No matches found
-    {% endif %}
+<div class="container-fluid bg-custom-grey">
+    <div class="container col-8 bg-white min-vh-100">
+        <div class="row align-items-center p-3">
+            {% if ads %}
+            <h2 class="mb-3"> Search results for to sit in {{ region.name|capfirst }}: </h2>
+            {% for ad in ads %}
+            {% for img in ad_image %}
+            {% if user != ad.user.user %}
+            <div class="card flex-row flex-wrap">
+                <div class="card-header border-0">
+                    <img src="{{MEDIA_URL}}{{img}}"
+                         alt="Animal {{ad.animal.name}} belonging to {{ad.user.user.username">
+                </div>
+                <div class="card-block px-2">
+                    <h4 class="card-title">{{ ad.animal.name}}<a class="text-muted"
+                                                                 href="{%url 'buddi:user' ad.user.user.username %}">{{
+                        ad.user.user.username</a></h4>
+                    <p class="card-text">{{ad}}</p>
+                    <a href="#" class="btn btn-primary">Get In Touch With Owner</a>
+                    <a href="{%url 'buddi:user' ad.user.user.username %}" class="btn btn-secondary">View Animal</a>
+                </div>
+                <div class="w-100"></div>
+                <div class="card-footer w-100 text-muted">
+                    <a href="#" class="btn btn-primary">Get In Touch With Owner</a>
+                    <a href="{%url 'buddi:user' ad.user.user.username %}" class="btn btn-secondary">View Animal</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            {% elif type == "sit" %}
+            <h2>Search results for to sit in {{ region.name|capfirst }}: </h2>
+            <h5>Sorry there are currently no listings for this location</h5>
+            {% endif %}
+            {% if sitters %}
+            <h2>Search results for sitters in {{ region.name|capfirst }}: </h2>
+
+            {% for s in sitters %}
+            {% if user != s.user.user %}
+            <div class="card flex-row flex-wrap">
+                <div class="card-header border-0">
+                    <img style="width:140px;" src="{{MEDIA_URL}}{{s.user.profile_image}}" alt="Sitter {{ s.user.user.username}}">
+                </div>
+                <div class="card-block px-2">
+                    <h4 class="card-title">{{ s.user.user.username}}</h4>
+                    <p class="card-text">Hourly rate: {{s.hourly_rate}}<br><br>{{s.bio}}</p>
+
+                </div>
+                <div class="w-100"></div>
+                <div class="card-footer w-100 text-muted">
+                    <a href="#" class="btn btn-primary">Get In Touch With Sitter</a>
+                    <a href="{%url 'buddi:sitter' s.user.user.username %}" class="btn btn-secondary">View Profile</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% elif type == "sitters" %}
+            <h2>Search results for sitters in {{ region.name|capfirst }}: </h2>
+            <h5>Sorry there are currently no sitters in this location</h5>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

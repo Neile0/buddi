@@ -244,9 +244,16 @@ def sit(request, param):
 
     owners = UserProfile.objects.filter(region=region)
     ad_list = Ad.objects.filter(user__in=owners)
+    images = []
+    for ad in ad_list:
+        image = AnimalImages.objects.all().get(animal=ad.animal)[0]
+        images.append(image)
 
     context_dict['ads'] = ad_list
+    context_dict['ad_image'] = images
     context_dict['sitters'] = sitter_list
+    context_dict['region'] = region
+    context_dict['type'] = "sit"
 
     return render(request, 'buddi/search.html', context=context_dict)
 
@@ -254,6 +261,7 @@ def sit(request, param):
 def sitters(request, param):
     print(param)
     ad_list = []
+    ad_image = []
     context_dict = {'regions': get_parent_regions()}
     region = Region.objects.get(name__iexact=param)
     print(region)
@@ -263,6 +271,8 @@ def sitters(request, param):
 
     context_dict['ads'] = ad_list
     context_dict['sitters'] = sitter_list
+    context_dict['region'] = region
+    context_dict['type'] = "sitters"
     return render(request, 'buddi/search.html', context=context_dict)
 
 
